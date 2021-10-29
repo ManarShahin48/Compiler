@@ -22,20 +22,20 @@ class Compiler:
         print (df)
 
         # export the dataframe to csv using comma delimiting
-        df.to_csv("random.csv", sep=",")
+        df.to_csv("test.csv", sep=",")
 
     @staticmethod
     def random_to_sqlite():
         # E ==> Extract
-        df = pd.read_csv('random.csv')
+        df = pd.read_csv('test.csv')
         # print(df)
 
         # T ==> Transform
         csv_database = create_engine('sqlite:///csv_database.db')
 
         # L ==> Load
-        df.to_sql('menna', csv_database)
-        df = pd.read_sql_query('SELECT * FROM menna', csv_database)
+        df.to_sql('table1', csv_database)
+        df = pd.read_sql_query('SELECT * FROM table1', csv_database)
 
         # print(csv_database)
 
