@@ -52,6 +52,7 @@ class Lexer(object):
         'RBRACE',
         'L_SQ_BRACE',
         'R_SQ_BRACE',
+        'DATASOURCE',
     ] + list(reseverd_words.values())
 
     # Regular expression rules for simple tokens
@@ -77,6 +78,8 @@ class Lexer(object):
     t_RBRACE = r'\}'
     t_L_SQ_BRACE = r'\['
     t_R_SQ_BRACE = r'\]'
+    t_DATASOURCE = r'\[[^,\]\[]+\]'
+
 
     # A string containing ignored characters (spaces and tabs)
     t_ignore = ' \t'
@@ -141,7 +144,7 @@ while(True):
     test.tokenize(q)
 
 
-
+#Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 
 # env\Scripts\activate
 # python ply_lex.py
