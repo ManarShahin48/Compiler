@@ -10,28 +10,30 @@ class Lexer(object):
         'from': 'FROM',
         'into': 'INTO',
         'where': 'WHERE',
-        'insert':'INSERT',
-        'values':'VALUES',
-        'delete':'DELETE',
+        'insert': 'INSERT',
+        'values': 'VALUES',
+        'delete': 'DELETE',
         'update': 'UPDATE',
-        'set':'SET',
+        'set': 'SET',
         'distinct': 'DISTINCT',
         'count': 'COUNT',
-        'sum':'SUM',
+        'sum': 'SUM',
         'as': 'AS',
-        'group':'GROUP',
-        'order':'ORDER',
-        'by':'BY',
+        'group': 'GROUP',
+        'order': 'ORDER',
+        'by': 'BY',
         'having': 'HAVING',
+        'join': 'JOIN',
+        'inner': 'INNER',
     }
 
-    
     tokens = [
         'NUMBER',
         'PLUS',
         'MINUS',
         'TIMES',
         'DIVIDE',
+        'COLMN_NAME',
         'NAME',
         'EQUAL',
         'BIGGER_THAN_OR_EQUAL_TO',
@@ -44,6 +46,8 @@ class Lexer(object):
         'RPAREN',
         'SINGLE_QUOTE',
         'DOUBLE_QUOTE',
+        'ARABIC_DOUBLE_QUOTE',
+        'R_ARABIC_DOUBLE_QUOTE',
         'ALL',
         'AND',
         'OR',
@@ -53,6 +57,8 @@ class Lexer(object):
         'L_SQ_BRACE',
         'R_SQ_BRACE',
         'DATASOURCE',
+        'PERCENT',
+        'DOT',
     ] + list(reseverd_words.values())
 
     # Regular expression rules for simple tokens
@@ -71,6 +77,8 @@ class Lexer(object):
     t_RPAREN = r'\)'
     t_SINGLE_QUOTE = r'\''
     t_DOUBLE_QUOTE = r'\"'
+    t_ARABIC_DOUBLE_QUOTE = r'\”'
+    t_R_ARABIC_DOUBLE_QUOTE = r'\“'
     t_AND = r'\&'
     t_OR = r'\|'
     t_NOT = r'\!'
@@ -79,38 +87,51 @@ class Lexer(object):
     t_L_SQ_BRACE = r'\['
     t_R_SQ_BRACE = r'\]'
     t_DATASOURCE = r'\[[^,\]\[]+\]'
-
+    t_PERCENT = r'\%'
+    t_DOT = r'\.'
+    t_STRING = r'"([^"\n])*"'
 
     # A string containing ignored characters (spaces and tabs)
     t_ignore = ' \t'
     t_ignore_COMMENT = r'\#.*'
 
+    digit = r'([0-9])'
+    nondigit = r'([_A-Za-z])'
+    # r'[a-zA-Z_][a-zA-Z_0-9]*'
+    identifier = r'(' + nondigit + r'(' + digit + r'|' + nondigit + r')*)'
+    identifier = identifier + r'|' + r'\[' + digit + r'+\]'
+
     def __init__(self, **kwargs):
-        self.lexer = lex.lex(module=self, **kwargs) 
+        self.lexer = lex.lex(module=self, **kwargs)
 
     # Check for reserved words
-    def t_NAME(self,t):
+    @TOKEN(identifier)
+    def t_COLMN_NAME(self, t):
+        t.type = self.reseverd_words.get(t.value, 'COLMN_NAME')
+        return t
+
+    def t_NAME(self, t):
         r'[a-zA-Z_][a-zA-Z_0-9]*'
         t.type = self.reseverd_words.get(t.value, 'NAME')
-        return t 
+        return t
 
     # A regular expression rule with some action code
-    def t_NUMBER(self,t):
+    def t_NUMBER(self, t):
         r'\d+'
         t.value = int(t.value)
         return t
 
-    def t_ALL(self,t):
+    def t_ALL(self, t):
         r"""\*"""
         return t
 
-    def t_TIMES(self,t):
+    def t_TIMES(self, t):
         r'\*'
         t.value = '*'
         return t
 
-
     # Define a rule so we can track line numbers
+
     def t_newline(self, t):
         r'\n+'
         t.lexer.lineno += len(t.value)
@@ -128,8 +149,8 @@ class Lexer(object):
             my_token = self.lexer.token()
             if not my_token:
                 break
-            print("♦♦♦ ", my_token.value, " ======> ", my_token.type, )#, sep=""
-        
+            print("♦♦♦ ", my_token.value, " ======> ",
+                  my_token.type, )  # , sep=""
 
 
 # ♦♦♦♦♦♦♦♦♦♦ Build The Lexer ♦♦♦♦♦♦♦♦♦♦
@@ -144,13 +165,13 @@ while(True):
     test.tokenize(q)
 
 
-#Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+# Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 
 # env\Scripts\activate
 # python ply_lex.py
 
-#INSERT INTO Customers (CustomerName, ContactName, Country)VALUES('Cardinal', 'Tom B. Erichsen','Skagen 21', 'Stavanger', '4006', 'Norway')
-#delete from  Customers where CustomerName = 'Alfreds Futterkiste';
-#update Customers set ContactName = 'Alfred Schmidt', City = 'Frankfurt' where CustomerID = 1
-#SELECT Count(*) AS DistinctCountries FROM(SELECT DISTINCT Country FROM Customers)
-#SELECT SUM(column_name) FROM table_name WHERE  CONDITION GROUP BY column_name HAVING {arithematic function condition]; %%
+# INSERT INTO Customers (CustomerName, ContactName, Country)VALUES('Cardinal', 'Tom B. Erichsen','Skagen 21', 'Stavanger', '4006', 'Norway')
+# delete from  Customers where CustomerName = 'Alfreds Futterkiste';
+# update Customers set ContactName = 'Alfred Schmidt', City = 'Frankfurt' where CustomerID = 1
+# SELECT Count(*) AS DistinctCountries FROM(SELECT DISTINCT Country FROM Customers)
+# SELECT SUM(column_name) FROM table_name WHERE  CONDITION GROUP BY column_name HAVING {arithematic function condition]; %%
