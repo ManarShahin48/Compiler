@@ -34,7 +34,8 @@ class Lexer(object):
         'TIMES',
         'DIVIDE',
         'COLMN_NAME',
-        'NAME',
+        'COLUMN_NUMBER',
+        'STRING',
         'EQUAL',
         'BIGGER_THAN_OR_EQUAL_TO',
         'BIGGER_THAN',
@@ -87,6 +88,7 @@ class Lexer(object):
     t_L_SQ_BRACE = r'\['
     t_R_SQ_BRACE = r'\]'
     t_DATASOURCE = r'\[[^,\]\[]+\]'
+    t_COLUMN_NUMBER = r'\[\d+\]'
     t_PERCENT = r'\%'
     t_DOT = r'\.'
     t_STRING = r'"([^"\n])*"'
@@ -110,9 +112,9 @@ class Lexer(object):
         t.type = self.reseverd_words.get(t.value, 'COLMN_NAME')
         return t
 
-    def t_NAME(self, t):
+    def t_STRING(self, t):
         r'[a-zA-Z_][a-zA-Z_0-9]*'
-        t.type = self.reseverd_words.get(t.value, 'NAME')
+        t.type = self.reseverd_words.get(t.value, 'STRING')
         return t
 
     # A regular expression rule with some action code
@@ -155,6 +157,7 @@ class Lexer(object):
 
 # ♦♦♦♦♦♦♦♦♦♦ Build The Lexer ♦♦♦♦♦♦♦♦♦♦
 test = Lexer()
+
 
 while(True):
     print('♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦')

@@ -1,24 +1,101 @@
 # The name "yacc" stands for "Yet Another Compiler Compiler"
 # pass ==> make the function without body
 import ply.yacc as yacc
+import petl as etl
+import csv
+import sqlite3
 # Get the token map from the lexer.
 from ply_lex import tokens
 
-start = 's'
+start = 'start'
 
 
 def p_start(p):
-    'start : s'
+    '''s: select 
+    | insert
+    | update
+    | delete'''
+    pass
+
+# ♦♦♦♦♦♦♦ SELECT ♦♦♦♦♦♦♦
+
+
+def p_select(p):
+    'select: SELECT colums INTO DATASOURCE FROM DATASOURCE'
+
+    if p[4] == p[4].find('.db'):
+        with open(f'{p[4]}', 'r') as f:
+            connection = sqlite3.connect(f'{p[4]}')
+            # p[0] ==> SELECT * FROM example
+            table = etl.fromdb(connection, f'{p[0]}')
+
+    elif p[4] == p[4].find('.csv'):
+        with open(f'{p[4]}', 'r') as f:
+            table = etl.fromcsv(f'{p[4]}')
+
+    elif p[4] == p[4].find('.txt'):
+        with open(f'{p[4]}', 'r') as f:
+            table = etl.fromtext(f'{p[4]}')
+
+    elif p[4] == p[4].find('.xml'):
+        with open(f'{p[4]}', 'r') as f:
+            table = etl.fromxml(f'{p[4]}', 'tr', 'td')
+
+    elif p[4] == p[4].find('.json'):
+        with open(f'{p[4]}', 'r') as f:
+            table = etl.fromjson(f'{p[4]}', header=['foo', 'bar'])
+
+    elif p[4] == p[4].find('.p'):
+        with open(f'{p[4]}', 'r') as f:
+            table = etl.frompickle(f'{p[4]}')
+    print(table)
+
+
+def p_select_into(p):
+
     pass
 
 
-def p_s(p):
-    '''s: SELECT 
-    | INSERT
-    | UPDATE
-    | DELETE'''
+def p_column_all(p):
+    'colum: TIMIS'  # '*'
+    p[0] = ['*']
+
+
+def p_column_name(p):
+    'colum: COLMN_NAME'
+    p[0] = [p[1]]
+
+
+def p_column_number(p):
+    'colum: COLUMN_NUMBER'
+    p[1] = int(p[1][1:-1])
+    p[0] = [p[1]]
+
+
+def p_colums(p):
+    '''colum: colum COMMA colum
+    | empty'''
     pass
 
+# ♦♦♦♦♦♦♦ INSERT ♦♦♦♦♦♦♦
+
+
+def p_insert_into(p):
+    'insert: INSERT INTO DATASOURCE (colums) VALUES (STRING)'
+    if p[3] == p[3].find('.csv'):
+        table1 = [[f'{p[5]}', f'{p[5]}'],
+                  [f'{p[9]}', f'{p[9]}'],
+                  [f'{p[9]}', f'{p[9]}'],
+                  [f'{p[9]}', f'{p[9]}']]
+        with open(f'{p[5]}', 'w') as f:
+            writer = csv.writer(f)
+            writer.writerows(table1)
+        table2 = etl.fromcsv('example.csv')
+        table2
+
+
+def p_insert_select(p):
+    'insert: INSERT INTO DATASOURCE SELECT FROM DATASOURCE'
 # ♦♦♦♦♦♦♦ VARIABLES ♦♦♦♦♦♦♦
 
 
@@ -97,27 +174,6 @@ def p_factor_expr(p):
     p[0] = p[2]
 
 
-# ♦♦♦♦♦♦♦ SELECT ♦♦♦♦♦♦♦
-
-def p_select(p):
-    'select: SELECT colums FROM DATASOURCE'
-    pass
-
-
-def p_select_into(p):
-    'select: SELECT colums INTO DATASOURCE FROM DATASOURCE'
-    pass
-
-
-def p_colums(p):
-    'colums: colums COMMA COLMN_NAME'
-    pass
-
-
-def p_colums_n(p):
-    'colums: COLMN_NAME'
-    pass
-
 # ♦♦♦♦♦♦♦ INSERT ♦♦♦♦♦♦♦
 
 
@@ -140,8 +196,7 @@ def p_delete(p):
     pass
 
 
-# Error rule for syntax errors
-def p_error(p):
+def p_error(p):  # Error rule for syntax errors
     print("Syntax error in input!")
 
 
@@ -149,7 +204,7 @@ def p_error(p):
 parser = yacc.yacc()
 
 while True:
-    s = input('our yacc > ')
+    s = input('Our yacc > ')
     if not s:
         continue
     result = parser.parse(s)
