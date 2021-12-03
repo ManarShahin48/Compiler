@@ -25,6 +25,9 @@ class Lexer(object):
         'having': 'HAVING',
         'join': 'JOIN',
         'inner': 'INNER',
+        'asc':  'ASC',
+        'desc': 'DESC',
+        'limit': 'LIMIT',
     }
 
     tokens = [
@@ -33,7 +36,7 @@ class Lexer(object):
         'MINUS',
         'TIMES',
         'DIVIDE',
-        'COLMN_NAME',
+        'COLUMN_NAME',
         'COLUMN_NUMBER',
         'STRING',
         'EQUAL',
@@ -65,7 +68,7 @@ class Lexer(object):
     # Regular expression rules for simple tokens
     t_PLUS = r'\+'
     t_MINUS = r'-'
-    #t_TIMES = r'\*'
+    t_TIMES = r'\*'
     t_DIVIDE = r'/'
     t_EQUAL = r'='
     t_BIGGER_THAN_OR_EQUAL_TO = r'>='
@@ -92,7 +95,6 @@ class Lexer(object):
     t_PERCENT = r'\%'
     t_DOT = r'\.'
     t_STRING = r'"([^"\n])*"'
-
     # A string containing ignored characters (spaces and tabs)
     t_ignore = ' \t'
     t_ignore_COMMENT = r'\#.*'
@@ -108,28 +110,14 @@ class Lexer(object):
 
     # Check for reserved words
     @TOKEN(identifier)
-    def t_COLMN_NAME(self, t):
-        t.type = self.reseverd_words.get(t.value, 'COLMN_NAME')
-        return t
-
-    def t_STRING(self, t):
-        r'[a-zA-Z_][a-zA-Z_0-9]*'
-        t.type = self.reseverd_words.get(t.value, 'STRING')
+    def t_COLUMN_NAME(self, t):
+        t.type = self.reseverd_words.get(t.value, 'COLUMN_NAME')
         return t
 
     # A regular expression rule with some action code
     def t_NUMBER(self, t):
         r'\d+'
         t.value = int(t.value)
-        return t
-
-    def t_ALL(self, t):
-        r"""\*"""
-        return t
-
-    def t_TIMES(self, t):
-        r'\*'
-        t.value = '*'
         return t
 
     # Define a rule so we can track line numbers
@@ -158,14 +146,14 @@ class Lexer(object):
 # ♦♦♦♦♦♦♦♦♦♦ Build The Lexer ♦♦♦♦♦♦♦♦♦♦
 test = Lexer()
 
-
-while(True):
-    print('♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦')
-    q = input('Enter Query, Q to Exit: ')
-    q = q.lower()
-    if q == 'q':
-        break
-    test.tokenize(q)
+if __name__ == '__main__':
+    while(True):
+        print('♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦')
+        q = input('Enter Query, Q to Exit: ')
+        q = q.lower()
+        if q == 'q':
+            break
+        test.tokenize(q)
 
 
 # Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
