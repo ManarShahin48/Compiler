@@ -9,17 +9,18 @@ from ply_lex import tokens
 
 
 start = 'start'
+
+
 def p_start(p):
-    '''s: select 
+    '''start : select 
         | insert
         | update
         | delete'''
     pass
 
 
-
 # ♦♦♦♦♦♦♦ OPERATIONS ♦♦♦♦♦♦♦
-#♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦
+# ♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦
 
 def p_expression_plus(p):
     'expression : expression PLUS term'
@@ -29,6 +30,11 @@ def p_expression_plus(p):
 def p_expression_minus(p):
     'expression : expression MINUS term'
     p[0] = p[1] - p[3]
+
+
+def p_expression_term(p):
+    'expression : term'
+    p[0] = p[1]
 
 
 def p_term_times(p):
@@ -59,80 +65,80 @@ def p_factor_expr(p):
 
 
 # ♦♦♦♦♦♦♦ Basic Variables ♦♦♦♦♦♦♦
-#♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦
+# ♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦
 def p_empty(p):
-    'empty:'
+    'empty :'
     p[0] = ' '
 
 
 def p_op(p):
-    '''op: EQUAL
+    '''op : EQUAL
     | BIGGER_THAN_OR_EQUAL_TO
     | BIGGER_THAN
-    |SMALLER_THAN_OR_EQUAL_TO
-    |SMALLER_THAN'''
+    | SMALLER_THAN_OR_EQUAL_TO
+    | SMALLER_THAN'''
     pass
 
 
 def p_where(p):
-    'where: WHERE condition'
+    'where : WHERE condition'
     p[0] = p[2]
 
 
 def p_where_empty(p):
-    'where: empty'
+    'where : empty'
     p[0] = True
 
 
 def p_condition(p):
-    'condition: exp op exp'
+    'condition : expression op expression'
     p[0] = p[1] + p[2] + p[3]
 
 
-def p_cond_parens(p):
-    'cond : LPAREN cond RPAREN'
+def p_condition_parens(p):
+    'condition : LPAREN condition RPAREN'
     p[0] = p[2]
 
 
-def p_exp(p):
-    'exp: expression_term'
+def p_expression(p):
+    'expression : expression_term'
     p[0] = p[1]
 
 
 def p_expression_term(p):
-    'expression : term'
+    'expression_term : term'
     p[0] = p[1]
 
 
 def p_term(p):
-    '''term: COLMN_NAME
+    '''term : COLUMN_NAME
     | NUMBER
     | STRING'''
     pass
 
 
-def p_cond_and(p):
-    'cond : cond AND cond'
+def p_condition_and(p):
+    'condition : condition AND condition'
     p[0] = p[1] and p[3]
 
 
-def p_cond_or(p):
-    'cond : cond OR cond'
+def p_condition_or(p):
+    'condition : condition OR condition'
     p[0] = p[1] or p[3]
 
 
-def p_cond_not(p):
-    'cond : NOT cond'
+def p_condition_not(p):
+    'condition : NOT condition'
     p[0] = not p[2]
-    
+
 # ♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦
 
 
 # ♦♦♦♦♦♦♦ SELECT ♦♦♦♦♦♦♦
-#♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦
+# ♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦
 
 def p_select(p):
-    'select : SELECT column INTO DATASOURCE FROM DATASOURCE where group order limit SIMICOLON'
+    'select : SELECT column INTO DATASOURCE FROM DATASOURCE where group order limit SIME_COLON'
     print("sssssssss")
 # PETL
     # if p[4] == p[4].find('.db'):
@@ -170,7 +176,7 @@ def p_group(p):
 
 
 def p_having(p):
-    '''having : HAVING cond
+    '''having : HAVING condition
               | empty'''
     pass
 
@@ -183,7 +189,7 @@ def p_order(p):
 
 def p_orders(p):
     '''orders : column way
-                    | orders COMMA orders'''
+                    | orders COMAA orders'''
     pass
 
 
@@ -212,23 +218,23 @@ def p_select_into(p):
 
 
 def p_column_all(p):
-    'column: TIMIS'  # '*'
+    'column : TIMES'  # '*'
     p[0] = ['*']
 
 
 def p_column_name(p):
-    'column: COLUMN_NAME'
+    'column : COLUMN_NAME'
     p[0] = [p[1]]
 
 
 def p_column_number(p):
-    'column: COLUMN_NUMBER'
+    'column : COLUMN_NUMBER'
     p[1] = int(p[1][1:-1])
     p[0] = [p[1]]
 
 
 def p_columns(p):
-    '''column: column COMMA column
+    '''column : column COMAA column
                     | empty'''
     p[0] = []
     if type(p[1]) == list:
@@ -242,11 +248,11 @@ def p_columns(p):
 
 
 # ♦♦♦♦♦♦♦ INSERT ♦♦♦♦♦♦♦
-#♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦
+# ♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦
 
 def p_insert(p):
-    '''insert : INSERT INTO DATASOURCE icolumn VALUES LPAREN value RPAREN SIMICOLON
-                    | INSERT INTO DATASOURCE icolumn select SIMICOLON'''
+    '''insert : INSERT INTO DATASOURCE icolumn VALUES LPAREN value RPAREN SIME_COLON
+                    | INSERT INTO DATASOURCE icolumn select SIME_COLON'''
     pass
 # PETL
     # if p[3] == p[3].find('.csv'):
@@ -262,17 +268,17 @@ def p_insert(p):
 
 
 def p_value_string(p):
-    'value: STRING'
+    'value : STRING'
     pass
 
 
 def p_value_number(p):
-    'value: NUMBER'
+    'value : NUMBER'
     pass
 
 
 def p_value(p):
-    'value: value COMMA value'
+    'value : value COMAA value'
     pass
 
 
@@ -285,34 +291,34 @@ def p_icolumn(p):
 
 
 # ♦♦♦♦♦♦♦ UPDATE ♦♦♦♦♦♦♦
-#♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦
+# ♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦
 
 def p_update(p):
-    'update : UPDATE DATASOURCE SET assigns where SIMICOLON'
+    'update : UPDATE DATASOURCE SET assigns where SIME_COLON'
     pass
 
 
 def p_assigns(p):
     '''assigns : column EQUAL value
-                        | assigns COMMA assigns'''
+                        | assigns COMAA assigns'''
     pass
 
 # ♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦
 
 
 # ♦♦♦♦♦♦♦ DELETE ♦♦♦♦♦♦♦
-#♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦
+# ♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦
 
 def p_delete(p):
     'delete : DELETE FROM DATASOURCE where'
-    pass
+    print("sssssssss")
 
 # ♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦
 
 
 # Error rule for syntax errors
-def p_error(p):
-    print("Syntax error in input!")
+# def p_error(p):
+#     print("Syntax error in input!")
 
 
 # Build the parser
@@ -323,4 +329,4 @@ if __name__ == '__main__':
         if not s:
             continue
         result = parser.parse(s)
-        print(result)
+        # print(result)
