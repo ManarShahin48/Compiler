@@ -7,17 +7,19 @@ import sqlite3
 # Get the token map from the lexer.
 from ply_lex import tokens
 
+
 start = 'start'
-
-
 def p_start(p):
     '''s: select 
         | insert
         | update
         | delete'''
     pass
-# ♦♦♦♦♦♦♦ OPERATIONS ♦♦♦♦♦♦♦
 
+
+
+# ♦♦♦♦♦♦♦ OPERATIONS ♦♦♦♦♦♦♦
+#♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦
 
 def p_expression_plus(p):
     'expression : expression PLUS term'
@@ -53,8 +55,11 @@ def p_factor_expr(p):
     'factor : LPAREN expression RPAREN'
     p[0] = p[2]
 
+# ♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦
+
 
 # ♦♦♦♦♦♦♦ Basic Variables ♦♦♦♦♦♦♦
+#♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦
 def p_empty(p):
     'empty:'
     p[0] = ' '
@@ -119,10 +124,12 @@ def p_cond_or(p):
 def p_cond_not(p):
     'cond : NOT cond'
     p[0] = not p[2]
+    
+# ♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦
 
-# ♦♦♦♦♦♦♦ ♦♦♦♦♦♦♦ ♦♦♦♦♦♦♦ ♦♦♦♦♦♦♦ ♦♦♦♦♦♦♦ ♦♦♦♦♦♦♦ ♦♦♦♦♦♦♦ ♦♦♦♦♦♦♦
+
 # ♦♦♦♦♦♦♦ SELECT ♦♦♦♦♦♦♦
-
+#♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦
 
 def p_select(p):
     'select : SELECT column INTO DATASOURCE FROM DATASOURCE where group order limit SIMICOLON'
@@ -232,8 +239,10 @@ def p_columns(p):
 
 
 # ♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦
-# ♦♦♦♦♦♦♦ INSERT ♦♦♦♦♦♦♦
 
+
+# ♦♦♦♦♦♦♦ INSERT ♦♦♦♦♦♦♦
+#♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦
 
 def p_insert(p):
     '''insert : INSERT INTO DATASOURCE icolumn VALUES LPAREN value RPAREN SIMICOLON
@@ -271,9 +280,12 @@ def p_icolumn(p):
     '''icolumn : LPAREN COLUMN_NAME RPAREN
                         | empty'''
     pass
-# ♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦
-# ♦♦♦♦♦♦♦ UPDATE ♦♦♦♦♦♦♦
 
+# ♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦
+
+
+# ♦♦♦♦♦♦♦ UPDATE ♦♦♦♦♦♦♦
+#♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦
 
 def p_update(p):
     'update : UPDATE DATASOURCE SET assigns where SIMICOLON'
@@ -284,16 +296,20 @@ def p_assigns(p):
     '''assigns : column EQUAL value
                         | assigns COMMA assigns'''
     pass
-# ♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦
-# ♦♦♦♦♦♦♦ DELETE ♦♦♦♦♦♦♦
 
+# ♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦
+
+
+# ♦♦♦♦♦♦♦ DELETE ♦♦♦♦♦♦♦
+#♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦
 
 def p_delete(p):
     'delete : DELETE FROM DATASOURCE where'
     pass
 
-
 # ♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦
+
+
 # Error rule for syntax errors
 def p_error(p):
     print("Syntax error in input!")
