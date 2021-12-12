@@ -144,48 +144,26 @@ def t_error(t):
     t.lexer.skip(1)
 
 
-# def tokenize(data):
-#     test.input(data)
-#     print('♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦')
-#     print('The SQL Statement Tokens: ')
-#     while True:
-#         my_token = test.token()
-#         if not my_token:
-#             break
-#         print("♦♦♦ ", my_token.value, " ======> ",
-#               my_token.type, )  # , sep=""
-
-
-# # ♦♦♦♦♦♦♦♦♦♦ Build The Lexer ♦♦♦♦♦♦♦♦♦♦
-# test = lex.lex()
-
-# if __name__ == '__main__':
-#     while(True):
-#         print('♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦')
-#         q = input('Enter Query, Q to Exit: ')
-#         q = q.lower()
-#         if q == 'q':
-#             break
-#         test.tokenize(q)
-
+# ♦♦♦♦♦♦♦♦♦♦ Build The Lexer ♦♦♦♦♦♦♦♦♦♦
 lexer = lex.lex()
 
 if __name__ == "__main__":
     while True:
-        s = input("lex> ")
-        if not s:
+        print("♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦")
+        q = input("Enter Query, Q to Exit: ")
+        q = q.lower()
+        if q == "q":
             break
-        s = s.lower()
-        lexer.input(s)
-        print("=======Tokens=======")
+        lexer.input(q)
+        print("♦♦♦♦♦♦♦♦ Tokens ♦♦♦♦♦♦♦♦")
         while True:
             tok = lexer.token()
             if not tok:
                 break
-            print("\t", tok.value, "\t:\t", tok.type, sep="")
-        print("====================")
-# Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+            print("♠  ", tok.value, " <====> ", tok.type, sep="")
 
+
+# Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 # env\Scripts\activate
 # python ply_lex.py
 

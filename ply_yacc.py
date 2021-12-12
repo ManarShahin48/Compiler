@@ -351,6 +351,8 @@ parser = yacc.yacc()
 if __name__ == "__main__":
     while True:
         s = input("The yacc :  ")
+        if s == "q":
+            break
         if not s:
             continue
         result = parser.parse(s)
