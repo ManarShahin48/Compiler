@@ -4,6 +4,10 @@ import ply.yacc as yacc
 import petl as etl
 import csv
 import sqlite3
+from petl import fromcsv
+#from petl import look, fromsqlite3
+from petl import look
+import pickle
 
 # Get the token map from the lexer.
 from ply_lex import tokens
@@ -151,6 +155,16 @@ def p_select(p):
     | empty"""
     print("Select is Done ♠")
 
+
+    #fileName = input("Enter your file name --> ")
+    if '.csv' in p[5]:
+        testFile = fromcsv(p[5])
+    # elif '.db' in p[5]:
+    #     testFile = fromsqlite3(p[5], 'select * from foobar')
+    elif '.p' in p[5]:
+        testFile = etl.frompickle(p[5])
+
+    look(testFile)
 
 # PETL
 # if p[4] == p[4].find('.db'):
