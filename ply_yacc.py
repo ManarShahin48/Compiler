@@ -151,9 +151,11 @@ def p_condition_not(p):
 
 
 def p_select(p):
-    """select : SELECT column into FROM DATASOURCE where group order limit SIME_COLON
+    """select : SELECT column into FROM data where group order limit SIME_COLON
     | empty"""
-    print("Select is Done ♠")
+    print(f"Columns ===> {p[2]}")
+    print(f"DataSource ===> {p[5]}")
+    print(f"DataSource Destination ===> {p[3]}")
 
 
     #fileName = input("Enter your file name --> ")
@@ -198,6 +200,7 @@ def p_select(p):
 def p_into(p):
     """into : INTO DATASOURCE
     | empty"""
+    p[0] = p[2][1:-1]
 
 
 def p_group(p):
@@ -259,20 +262,21 @@ def p_column_name(p):
 
 
 def p_column_number(p):
-    "column : COLUMN_NUMBER"
-    p[1] = int(p[1][1:-1])
-    p[0] = [p[1]]
+    "column : DATASOURCE"
+    p[0] = [int(p[1][1:-1])]
 
 
 def p_columns(p):
     """column : column COMAA column
     | empty"""
     p[0] = []
-    if type(p[1]) == list:
-        p[0].extend(p[1])
-    else:
-        p[0].append(p[1])
-    p[0].append(p[3])
+    p[0].extend(p[1])
+    p[0].extend(p[3])
+
+
+def p_data(p):
+    "data : DATASOURCE"
+    p[0] = p[1][1:-1]
 
 
 # ♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦
