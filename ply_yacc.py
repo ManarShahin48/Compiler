@@ -159,14 +159,14 @@ def p_select(p):
 
 
     #fileName = input("Enter your file name --> ")
-    if '.csv' in p[5]:
-        testFile = fromcsv(p[5])
-    # elif '.db' in p[5]:
-    #     testFile = fromsqlite3(p[5], 'select * from foobar')
-    elif '.p' in p[5]:
-        testFile = etl.frompickle(p[5])
+    # if '.csv' in p[5]:
+    #     testFile = fromcsv(p[5])
+    # # elif '.db' in p[5]:
+    # #     testFile = fromsqlite3(p[5], 'select * from foobar')
+    # elif '.p' in p[5]:
+    #     testFile = etl.frompickle(p[5])
 
-    look(testFile)
+    # look(testFile)
 
 # PETL
 # if p[4] == p[4].find('.db'):
@@ -200,7 +200,8 @@ def p_select(p):
 def p_into(p):
     """into : INTO DATASOURCE
     | empty"""
-    p[0] = p[2][1:-1]
+    pass
+    #p[0] = p[2][1:-1]
 
 
 def p_group(p):
