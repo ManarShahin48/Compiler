@@ -55,8 +55,31 @@ from petl import appendcsv
 appendcsv(table, "test.csv")
 appendcsv("extract from", "load into")
 
-# ================= Appand pickle ================= #
+# ================= to pickle ================= #
 from petl import topickle, look
 
 topickle(table, "test.dat")
 topickle("extract from", "load into")
+
+# ================= Appand pickle ================= # MERGE
+from petl import appendpickle
+appendpickle(table, 'test.dat')
+appendpickle("extract from", "load into")
+
+# ================= to tosqlite3 ================= #
+from petl import tosqlite3
+from petl import look, fromsqlite3
+tosqlite3(table, 'test.db', 'foobar')
+tosqlite3("extract from", "load into", "????")
+look(fromsqlite3('test.db', 'select * from foobar'))   #print
+
+# ================= Appand tosqlite3 ================= #
+from petl import appendsqlite3
+appendsqlite3(table, 'test.db', 'foobar')
+appendsqlite3("extract from", "load into", "????")
+look(fromsqlite3('test.db', 'select * from foobar'))
+
+# ================= to tojson ================= #
+from petl import tojson
+tojson(table, 'example.json')
+tojson("extract from", "load into")
