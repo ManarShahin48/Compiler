@@ -26,7 +26,7 @@ with open("example.json", "w") as f:
 table1 = etl.fromjson("example.json", header=["foo", "bar"])
 print(table1)
 
-# ================= JSONS Files =================#
+# ================= JSONS Files ================= #
 import petl as etl
 
 table1 = [["foo", "bar"], ["a", 1], ["b", 2], ["c", 2]]
@@ -42,3 +42,21 @@ records = [("apples", 1, 2.5), ("oranges", 3, 4.4), ("pears", 7, 0.1)]
 df = pd.DataFrame.from_records(records, columns=("foo", "bar", "baz"))
 table = etl.fromdataframe(df)
 print(table)
+
+# ================= To CSV ================= #
+from petl import tocsv, look
+
+tocsv(table, "test.csv")
+tocsv("extract from", "load into")
+
+# ================= Appand CSV ================= # MERGE
+from petl import appendcsv
+
+appendcsv(table, "test.csv")
+appendcsv("extract from", "load into")
+
+# ================= Appand pickle ================= #
+from petl import topickle, look
+
+topickle(table, "test.dat")
+topickle("extract from", "load into")
