@@ -7,6 +7,7 @@ import sqlite3
 import pandas as pd
 from petl import fromcsv
 from petl import look
+from petl import tocsv, look
 
 # from petl import fromsqlite3
 from petl import fromxml
@@ -155,11 +156,12 @@ def p_condition_not(p):
 def p_select(p):
     """select : SELECT column into FROM data where group order limit SIME_COLON
     | empty"""
+    # ================= EXTRACT ================= #
     if ".csv" in f"{p[5]}":
         testFile = fromcsv(f"{p[5]}")
     # elif ".db" in p[5]:
     #     testFile = fromsqlite3(f"{p[5]}", "select * from foobar")
-    elif ".p" in p[5]:
+    elif ".dat" in p[5]:
         testFile = etl.frompickle(f"{p[5]}")
     elif ".json" in p[5]:
         testFile = etl.fromjson(f"{p[5]}")
@@ -176,8 +178,8 @@ def p_select(p):
 def p_into(p):
     """into : INTO DATASOURCE
     | empty"""
-    pass
     # p[0] = p[2][1:-1]
+    # ================= LOAD ================= #
 
 
 def p_group(p):
