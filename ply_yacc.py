@@ -4,6 +4,12 @@ import ply.yacc as yacc
 import petl as etl
 import csv
 import sqlite3
+import pandas as pd
+from petl import fromcsv
+from petl import look
+
+# from petl import fromsqlite3
+from petl import fromxml
 
 # Get the token map from the lexer.
 from ply_lex import tokens
@@ -149,44 +155,29 @@ def p_condition_not(p):
 def p_select(p):
     """select : SELECT column into FROM data where group order limit SIME_COLON
     | empty"""
+    if ".csv" in f"{p[5]}":
+        testFile = fromcsv(f"{p[5]}")
+    # elif ".db" in p[5]:
+    #     testFile = fromsqlite3(f"{p[5]}", "select * from foobar")
+    elif ".p" in p[5]:
+        testFile = etl.frompickle(f"{p[5]}")
+    elif ".json" in p[5]:
+        testFile = etl.fromjson(f"{p[5]}")
+    elif ".df" in p[5]:
+        testFile = etl.fromdataframe(f"{p[5]}")
+    elif ".xml" in p[5]:
+        testFile = fromxml(f"{p[5]}")
+    look(testFile)
     print(f"Columns ===> {p[2]}")
     print(f"DataSource ===> {p[5]}")
     print(f"DataSource Destination ===> {p[3]}")
 
 
-# PETL
-# if p[4] == p[4].find('.db'):
-#     with open(f'{p[4]}', 'r') as f:
-#         connection = sqlite3.connect(f'{p[4]}')
-#         # p[0] ==> SELECT * FROM example
-#         table = etl.fromdb(connection, f'{p[0]}')
-
-# elif p[4] == p[4].find('.csv'):
-#     with open(f'{p[4]}', 'r') as f:
-#         table = etl.fromcsv(f'{p[4]}')
-
-# elif p[4] == p[4].find('.txt'):
-#     with open(f'{p[4]}', 'r') as f:
-#         table = etl.fromtext(f'{p[4]}')
-
-# elif p[4] == p[4].find('.xml'):
-#     with open(f'{p[4]}', 'r') as f:
-#         table = etl.fromxml(f'{p[4]}', 'tr', 'td')
-
-# elif p[4] == p[4].find('.json'):
-#     with open(f'{p[4]}', 'r') as f:
-#         table = etl.fromjson(f'{p[4]}', header=['foo', 'bar'])
-
-# elif p[4] == p[4].find('.p'):
-#     with open(f'{p[4]}', 'r') as f:
-#         table = etl.frompickle(f'{p[4]}')
-# print(table)
-
-
 def p_into(p):
     """into : INTO DATASOURCE
     | empty"""
-    p[0] = p[2][1:-1]
+    pass
+    # p[0] = p[2][1:-1]
 
 
 def p_group(p):
