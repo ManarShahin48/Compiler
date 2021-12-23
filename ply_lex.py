@@ -103,7 +103,6 @@ digit = r"([0-9])"
 nondigit = r"([_A-Za-z])"
 # r'[a-zA-Z_][a-zA-Z_0-9]*'
 identifier = r"(" + nondigit + r"(" + digit + r"|" + nondigit + r")*)"
-identifier = identifier + r"|" + r"\[" + digit + r"+\]"
 
 
 def __init__(self, **kwargs):
