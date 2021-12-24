@@ -1,5 +1,8 @@
 # The name "yacc" stands for "Yet Another Compiler Compiler"
 # pass ==> make the function without body
+from petl.io.csv import appendcsv
+from petl.io.db import appenddb
+from petl.io.pickle import appendpickle, frompickle
 import ply.yacc as yacc
 import petl as etl
 import csv
@@ -8,8 +11,6 @@ import pandas as pd
 from petl import fromcsv
 from petl import look
 from petl import tocsv, look
-
-# from petl import fromsqlite3
 from petl import fromxml
 
 # Get the token map from the lexer.
@@ -87,26 +88,22 @@ def p_op(p):
     | BIGGER_THAN
     | SMALLER_THAN_OR_EQUAL_TO
     | SMALLER_THAN"""
-    pass
+    p[0] = p[1]
 
 
 def p_where(p):
     "where : WHERE condition"
-
     p[0] = p[2]
 
 
 def p_where_empty(p):
     "where : empty"
-    p[0] = True
+    p[0] = None
 
 
 def p_condition(p):
     "condition : expression op expression"
-    pass
-
-
-# p[0] = p[1] + p[2] + p[3]
+    p[0] = (p[1], p[2], p[3])  # =====> TUPLE
 
 
 def p_condition_parens(p):
@@ -128,7 +125,7 @@ def p_term(p):
     """term : COLUMN_NAME
     | NUMBER
     | STRING"""
-    pass
+    p[0] = p[1]
 
 
 def p_condition_and(p):
@@ -154,38 +151,57 @@ def p_condition_not(p):
 
 
 def p_select(p):
-    """select : SELECT column into FROM data where group order limit SIME_COLON
-    | empty"""
+    """select : SELECT column FROM data into where order SIME_COLON"""
     # ================= EXTRACT ================= #
-    if ".csv" in f"{p[5]}":
-        testFile = fromcsv(f"{p[5]}")
-    # elif ".db" in p[5]:
-    #     testFile = fromsqlite3(f"{p[5]}", "select * from foobar")
-    elif ".dat" in p[5]:
-        testFile = etl.frompickle(f"{p[5]}")
+    testFile = None
+    if ".csv" in p[4]:
+        testFile = fromcsv(p[4])
+        print("here")
+    elif ".db" in p[4]:
+        Connection = sqlite3.connect(p[4])
+        testFile = etl.fromdb(Connection, "SELECT * FROM table1")
+    elif ".p" in p[4]:
+        testFile = etl.frompickle(p[5])
+    elif ".json" in p[4]:
+        testFile = etl.fromjson(p[4])
+
+    # ================= TRANSFORM ================= #
+    # if p[6] != None: ===> where
+
+    if p[2] != "*":
+        testFile = etl.cut(testFile, p[2])  # Select by column number ===> bug
+
+    # ================= LOAD ================= #
+    if p[5] == "console":
+        print(testFile)
+    elif ".csv" in p[5]:
+        appendcsv(testFile, p[5])
+        print("Success")
+    elif ".p" in p[5]:
+        appendpickle(testFile, p[5])
+        print(frompickle(p[5]))
+    elif ".db" in p[5]:
+        Connection = sqlite3.connect(p[5])
+        appenddb(testFile, Connection, "table1")
+        print("Success")
     elif ".json" in p[5]:
-        testFile = etl.fromjson(f"{p[5]}")
-    elif ".df" in p[5]:
-        testFile = etl.fromdataframe(f"{p[5]}")
-    elif ".xml" in p[5]:
-        testFile = fromxml(f"{p[5]}")
-    look(testFile)
-    print(f"Columns ===> {p[2]}")
-    print(f"DataSource ===> {p[5]}")
-    print(f"DataSource Destination ===> {p[3]}")
+        etl.tojsonarrays(testFile, p[5])
+        print(open(p[5]).read())
+
+    # print(f"Columns ===> {p[2]}")
+    # print(f"DataSource ===> {p[4]}")
+    # print(f"DataSource Destination ===> {p[5]}")
 
 
 def p_into(p):
-    """into : INTO DATASOURCE
-    | empty"""
-    # p[0] = p[2][1:-1]
-    # ================= LOAD ================= #
+    "into : INTO data"
+    p[0] = p[2]
 
 
-def p_group(p):
-    """group : GROUP BY column having
-    | empty"""
-    pass  # p[0] = " "
+def p_into_empty(p):
+    "into : empty"
+    p[0] = "console"
+    # p[0] = None
 
 
 def p_having(p):
@@ -213,26 +229,13 @@ def p_way(p):
     pass
 
 
-def p_limit(p):
-    """limit : LIMIT NUMBER"""
-    if p[2] < 0:
-        p[0] = None
-    else:
-        p[0] = int(p[2])
-
-
-def p_limit_empty(p):
-    "limit : empty"
-    p[0] = None
-
-
 def p_select_into(p):
     pass
 
 
 def p_column_all(p):
     "column : TIMES"  # '*'
-    p[0] = ["*"]
+    p[0] = "*"
 
 
 def p_column_name(p):

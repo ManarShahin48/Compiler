@@ -10,9 +10,11 @@ Unused terminals:
     DISTINCT
     DOT
     DOUBLE_QUOTE
+    GROUP
     INNER
     JOIN
     LBRACE
+    LIMIT
     L_SQ_BRACE
     PERCENT
     RBRACE
@@ -53,40 +55,35 @@ Rule 26    term -> STRING
 Rule 27    condition -> condition AND condition
 Rule 28    condition -> condition OR condition
 Rule 29    condition -> NOT condition
-Rule 30    select -> SELECT column into FROM data where group order limit SIME_COLON
-Rule 31    select -> empty
-Rule 32    into -> INTO DATASOURCE
-Rule 33    into -> empty
-Rule 34    group -> GROUP BY column having
-Rule 35    group -> empty
-Rule 36    having -> HAVING condition
-Rule 37    having -> empty
-Rule 38    order -> ORDER BY orders
-Rule 39    order -> empty
-Rule 40    orders -> column way
-Rule 41    orders -> orders COMAA orders
-Rule 42    way -> ASC
-Rule 43    way -> DESC
-Rule 44    way -> empty
-Rule 45    limit -> LIMIT NUMBER
-Rule 46    limit -> empty
-Rule 47    column -> TIMES
-Rule 48    column -> COLUMN_NAME
-Rule 49    column -> DATASOURCE
-Rule 50    column -> column COMAA column
-Rule 51    column -> empty
-Rule 52    data -> DATASOURCE
-Rule 53    insert -> INSERT INTO DATASOURCE icolumn VALUES LPAREN value RPAREN SIME_COLON
-Rule 54    insert -> INSERT INTO DATASOURCE icolumn LPAREN select RPAREN SIME_COLON
-Rule 55    value -> STRING
-Rule 56    value -> NUMBER
-Rule 57    value -> value COMAA value
-Rule 58    icolumn -> LPAREN COLUMN_NAME RPAREN
-Rule 59    icolumn -> empty
-Rule 60    update -> UPDATE DATASOURCE SET assigns where SIME_COLON
-Rule 61    assigns -> column EQUAL value
-Rule 62    assigns -> assigns COMAA assigns
-Rule 63    delete -> DELETE FROM DATASOURCE where SIME_COLON
+Rule 30    select -> SELECT column FROM data into where order SIME_COLON
+Rule 31    into -> INTO data
+Rule 32    into -> empty
+Rule 33    having -> HAVING condition
+Rule 34    having -> empty
+Rule 35    order -> ORDER BY orders
+Rule 36    order -> empty
+Rule 37    orders -> column way
+Rule 38    orders -> orders COMAA orders
+Rule 39    way -> ASC
+Rule 40    way -> DESC
+Rule 41    way -> empty
+Rule 42    column -> TIMES
+Rule 43    column -> COLUMN_NAME
+Rule 44    column -> DATASOURCE
+Rule 45    column -> column COMAA column
+Rule 46    column -> empty
+Rule 47    data -> DATASOURCE
+Rule 48    insert -> INSERT INTO DATASOURCE icolumn VALUES LPAREN value RPAREN SIME_COLON
+Rule 49    insert -> INSERT INTO DATASOURCE icolumn LPAREN select RPAREN SIME_COLON
+Rule 50    value -> STRING
+Rule 51    value -> NUMBER
+Rule 52    value -> value COMAA value
+Rule 53    icolumn -> LPAREN COLUMN_NAME RPAREN
+Rule 54    icolumn -> empty
+Rule 55    update -> UPDATE DATASOURCE SET assigns where SIME_COLON
+Rule 56    assigns -> column EQUAL value
+Rule 57    assigns -> assigns COMAA assigns
+Rule 58    delete -> DELETE FROM DATASOURCE where SIME_COLON
 
 Terminals, with rules where they appear
 
@@ -94,85 +91,83 @@ ALL                  :
 AND                  : 27
 ARABIC_DOUBLE_QUOTE  : 
 AS                   : 
-ASC                  : 42
+ASC                  : 39
 BIGGER_THAN          : 15
 BIGGER_THAN_OR_EQUAL_TO : 14
-BY                   : 34 38
-COLUMN_NAME          : 24 48 58
+BY                   : 35
+COLUMN_NAME          : 24 43 53
 COLUMN_NUMBER        : 
-COMAA                : 41 50 57 62
+COMAA                : 38 45 52 57
 COUNT                : 
-DATASOURCE           : 32 49 52 53 54 60 63
-DELETE               : 63
-DESC                 : 43
+DATASOURCE           : 44 47 48 49 55 58
+DELETE               : 58
+DESC                 : 40
 DISTINCT             : 
 DIVIDE               : 8
 DOT                  : 
 DOUBLE_QUOTE         : 
-EQUAL                : 13 61
-FROM                 : 30 63
-GROUP                : 34
-HAVING               : 36
+EQUAL                : 13 56
+FROM                 : 30 58
+GROUP                : 
+HAVING               : 33
 INNER                : 
-INSERT               : 53 54
-INTO                 : 32 53 54
+INSERT               : 48 49
+INTO                 : 31 48 49
 JOIN                 : 
 LBRACE               : 
-LIMIT                : 45
-LPAREN               : 11 21 53 54 58
+LIMIT                : 
+LPAREN               : 11 21 48 49 53
 L_SQ_BRACE           : 
 MINUS                : 6
 NOT                  : 29
-NUMBER               : 10 25 45 56
+NUMBER               : 10 25 51
 OR                   : 28
-ORDER                : 38
+ORDER                : 35
 PERCENT              : 
 PLUS                 : 5
 RBRACE               : 
-RPAREN               : 11 21 53 54 58
+RPAREN               : 11 21 48 49 53
 R_ARABIC_DOUBLE_QUOTE : 
 R_SQ_BRACE           : 
 SELECT               : 30
-SET                  : 60
-SIME_COLON           : 30 53 54 60 63
+SET                  : 55
+SIME_COLON           : 30 48 49 55 58
 SINGLE_QUOTE         : 
 SMALLER_THAN         : 17
 SMALLER_THAN_OR_EQUAL_TO : 16
-STRING               : 26 55
+STRING               : 26 50
 SUM                  : 
-TIMES                : 7 47
-UPDATE               : 60
-VALUES               : 53
+TIMES                : 7 42
+UPDATE               : 55
+VALUES               : 48
 WHERE                : 18
 error                : 
 
 Nonterminals, with rules where they appear
 
-assigns              : 60 62 62
-column               : 30 34 40 50 50 61
-condition            : 18 21 27 27 28 28 29 36
-data                 : 30
+assigns              : 55 57 57
+column               : 30 37 45 45 56
+condition            : 18 21 27 27 28 28 29 33
+data                 : 30 31
 delete               : 4
-empty                : 19 31 33 35 37 39 44 46 51 59
+empty                : 19 32 34 36 41 46 54
 expression           : 5 6 11 20 20
 expression_term      : 22
 factor               : 7 8 9
-group                : 30
-having               : 34
-icolumn              : 53 54
+having               : 
+icolumn              : 48 49
 insert               : 2
 into                 : 30
-limit                : 30
 op                   : 20
 order                : 30
-orders               : 38 41 41
-select               : 1 54
+orders               : 35 38 38
+select               : 1 49
 start                : 0
 term                 : 5 6 7 8 23
 update               : 3
-value                : 53 57 57 61
-way                  : 40
-where                : 30 60 63
+value                : 48 52 52 56
+way                  : 37
+where                : 30 55 58
 
 Parsing method: LALR
 
@@ -183,26 +178,22 @@ state 0
     (2) start -> . insert
     (3) start -> . update
     (4) start -> . delete
-    (30) select -> . SELECT column into FROM data where group order limit SIME_COLON
-    (31) select -> . empty
-    (53) insert -> . INSERT INTO DATASOURCE icolumn VALUES LPAREN value RPAREN SIME_COLON
-    (54) insert -> . INSERT INTO DATASOURCE icolumn LPAREN select RPAREN SIME_COLON
-    (60) update -> . UPDATE DATASOURCE SET assigns where SIME_COLON
-    (63) delete -> . DELETE FROM DATASOURCE where SIME_COLON
-    (12) empty -> .
+    (30) select -> . SELECT column FROM data into where order SIME_COLON
+    (48) insert -> . INSERT INTO DATASOURCE icolumn VALUES LPAREN value RPAREN SIME_COLON
+    (49) insert -> . INSERT INTO DATASOURCE icolumn LPAREN select RPAREN SIME_COLON
+    (55) update -> . UPDATE DATASOURCE SET assigns where SIME_COLON
+    (58) delete -> . DELETE FROM DATASOURCE where SIME_COLON
 
     SELECT          shift and go to state 6
-    INSERT          shift and go to state 8
-    UPDATE          shift and go to state 9
-    DELETE          shift and go to state 10
-    $end            reduce using rule 12 (empty -> .)
+    INSERT          shift and go to state 7
+    UPDATE          shift and go to state 8
+    DELETE          shift and go to state 9
 
     start                          shift and go to state 1
     select                         shift and go to state 2
     insert                         shift and go to state 3
     update                         shift and go to state 4
     delete                         shift and go to state 5
-    empty                          shift and go to state 7
 
 state 1
 
@@ -240,347 +231,305 @@ state 5
 
 state 6
 
-    (30) select -> SELECT . column into FROM data where group order limit SIME_COLON
-    (47) column -> . TIMES
-    (48) column -> . COLUMN_NAME
-    (49) column -> . DATASOURCE
-    (50) column -> . column COMAA column
-    (51) column -> . empty
+    (30) select -> SELECT . column FROM data into where order SIME_COLON
+    (42) column -> . TIMES
+    (43) column -> . COLUMN_NAME
+    (44) column -> . DATASOURCE
+    (45) column -> . column COMAA column
+    (46) column -> . empty
     (12) empty -> .
 
-    TIMES           shift and go to state 12
-    COLUMN_NAME     shift and go to state 13
-    DATASOURCE      shift and go to state 14
-    COMAA           reduce using rule 12 (empty -> .)
-    INTO            reduce using rule 12 (empty -> .)
+    TIMES           shift and go to state 11
+    COLUMN_NAME     shift and go to state 12
+    DATASOURCE      shift and go to state 13
     FROM            reduce using rule 12 (empty -> .)
+    COMAA           reduce using rule 12 (empty -> .)
 
-    column                         shift and go to state 11
-    empty                          shift and go to state 15
+    column                         shift and go to state 10
+    empty                          shift and go to state 14
 
 state 7
 
-    (31) select -> empty .
+    (48) insert -> INSERT . INTO DATASOURCE icolumn VALUES LPAREN value RPAREN SIME_COLON
+    (49) insert -> INSERT . INTO DATASOURCE icolumn LPAREN select RPAREN SIME_COLON
 
-    $end            reduce using rule 31 (select -> empty .)
-    RPAREN          reduce using rule 31 (select -> empty .)
+    INTO            shift and go to state 15
 
 
 state 8
 
-    (53) insert -> INSERT . INTO DATASOURCE icolumn VALUES LPAREN value RPAREN SIME_COLON
-    (54) insert -> INSERT . INTO DATASOURCE icolumn LPAREN select RPAREN SIME_COLON
+    (55) update -> UPDATE . DATASOURCE SET assigns where SIME_COLON
 
-    INTO            shift and go to state 16
+    DATASOURCE      shift and go to state 16
 
 
 state 9
 
-    (60) update -> UPDATE . DATASOURCE SET assigns where SIME_COLON
+    (58) delete -> DELETE . FROM DATASOURCE where SIME_COLON
 
-    DATASOURCE      shift and go to state 17
+    FROM            shift and go to state 17
 
 
 state 10
 
-    (63) delete -> DELETE . FROM DATASOURCE where SIME_COLON
+    (30) select -> SELECT column . FROM data into where order SIME_COLON
+    (45) column -> column . COMAA column
 
     FROM            shift and go to state 18
+    COMAA           shift and go to state 19
 
 
 state 11
 
-    (30) select -> SELECT column . into FROM data where group order limit SIME_COLON
-    (50) column -> column . COMAA column
-    (32) into -> . INTO DATASOURCE
-    (33) into -> . empty
-    (12) empty -> .
+    (42) column -> TIMES .
 
-    COMAA           shift and go to state 20
-    INTO            shift and go to state 21
-    FROM            reduce using rule 12 (empty -> .)
+    FROM            reduce using rule 42 (column -> TIMES .)
+    COMAA           reduce using rule 42 (column -> TIMES .)
+    EQUAL           reduce using rule 42 (column -> TIMES .)
+    ASC             reduce using rule 42 (column -> TIMES .)
+    DESC            reduce using rule 42 (column -> TIMES .)
+    SIME_COLON      reduce using rule 42 (column -> TIMES .)
 
-    into                           shift and go to state 19
-    empty                          shift and go to state 22
 
 state 12
 
-    (47) column -> TIMES .
+    (43) column -> COLUMN_NAME .
 
-    COMAA           reduce using rule 47 (column -> TIMES .)
-    INTO            reduce using rule 47 (column -> TIMES .)
-    FROM            reduce using rule 47 (column -> TIMES .)
-    EQUAL           reduce using rule 47 (column -> TIMES .)
-    HAVING          reduce using rule 47 (column -> TIMES .)
-    ORDER           reduce using rule 47 (column -> TIMES .)
-    LIMIT           reduce using rule 47 (column -> TIMES .)
-    SIME_COLON      reduce using rule 47 (column -> TIMES .)
-    ASC             reduce using rule 47 (column -> TIMES .)
-    DESC            reduce using rule 47 (column -> TIMES .)
+    FROM            reduce using rule 43 (column -> COLUMN_NAME .)
+    COMAA           reduce using rule 43 (column -> COLUMN_NAME .)
+    EQUAL           reduce using rule 43 (column -> COLUMN_NAME .)
+    ASC             reduce using rule 43 (column -> COLUMN_NAME .)
+    DESC            reduce using rule 43 (column -> COLUMN_NAME .)
+    SIME_COLON      reduce using rule 43 (column -> COLUMN_NAME .)
 
 
 state 13
 
-    (48) column -> COLUMN_NAME .
+    (44) column -> DATASOURCE .
 
-    COMAA           reduce using rule 48 (column -> COLUMN_NAME .)
-    INTO            reduce using rule 48 (column -> COLUMN_NAME .)
-    FROM            reduce using rule 48 (column -> COLUMN_NAME .)
-    EQUAL           reduce using rule 48 (column -> COLUMN_NAME .)
-    HAVING          reduce using rule 48 (column -> COLUMN_NAME .)
-    ORDER           reduce using rule 48 (column -> COLUMN_NAME .)
-    LIMIT           reduce using rule 48 (column -> COLUMN_NAME .)
-    SIME_COLON      reduce using rule 48 (column -> COLUMN_NAME .)
-    ASC             reduce using rule 48 (column -> COLUMN_NAME .)
-    DESC            reduce using rule 48 (column -> COLUMN_NAME .)
+    FROM            reduce using rule 44 (column -> DATASOURCE .)
+    COMAA           reduce using rule 44 (column -> DATASOURCE .)
+    EQUAL           reduce using rule 44 (column -> DATASOURCE .)
+    ASC             reduce using rule 44 (column -> DATASOURCE .)
+    DESC            reduce using rule 44 (column -> DATASOURCE .)
+    SIME_COLON      reduce using rule 44 (column -> DATASOURCE .)
 
 
 state 14
 
-    (49) column -> DATASOURCE .
+    (46) column -> empty .
 
-    COMAA           reduce using rule 49 (column -> DATASOURCE .)
-    INTO            reduce using rule 49 (column -> DATASOURCE .)
-    FROM            reduce using rule 49 (column -> DATASOURCE .)
-    EQUAL           reduce using rule 49 (column -> DATASOURCE .)
-    HAVING          reduce using rule 49 (column -> DATASOURCE .)
-    ORDER           reduce using rule 49 (column -> DATASOURCE .)
-    LIMIT           reduce using rule 49 (column -> DATASOURCE .)
-    SIME_COLON      reduce using rule 49 (column -> DATASOURCE .)
-    ASC             reduce using rule 49 (column -> DATASOURCE .)
-    DESC            reduce using rule 49 (column -> DATASOURCE .)
+    FROM            reduce using rule 46 (column -> empty .)
+    COMAA           reduce using rule 46 (column -> empty .)
+    EQUAL           reduce using rule 46 (column -> empty .)
+    ASC             reduce using rule 46 (column -> empty .)
+    DESC            reduce using rule 46 (column -> empty .)
+    SIME_COLON      reduce using rule 46 (column -> empty .)
 
 
 state 15
 
-    (51) column -> empty .
+    (48) insert -> INSERT INTO . DATASOURCE icolumn VALUES LPAREN value RPAREN SIME_COLON
+    (49) insert -> INSERT INTO . DATASOURCE icolumn LPAREN select RPAREN SIME_COLON
 
-    COMAA           reduce using rule 51 (column -> empty .)
-    INTO            reduce using rule 51 (column -> empty .)
-    FROM            reduce using rule 51 (column -> empty .)
-    EQUAL           reduce using rule 51 (column -> empty .)
-    HAVING          reduce using rule 51 (column -> empty .)
-    ORDER           reduce using rule 51 (column -> empty .)
-    LIMIT           reduce using rule 51 (column -> empty .)
-    SIME_COLON      reduce using rule 51 (column -> empty .)
-    ASC             reduce using rule 51 (column -> empty .)
-    DESC            reduce using rule 51 (column -> empty .)
+    DATASOURCE      shift and go to state 20
 
 
 state 16
 
-    (53) insert -> INSERT INTO . DATASOURCE icolumn VALUES LPAREN value RPAREN SIME_COLON
-    (54) insert -> INSERT INTO . DATASOURCE icolumn LPAREN select RPAREN SIME_COLON
+    (55) update -> UPDATE DATASOURCE . SET assigns where SIME_COLON
 
-    DATASOURCE      shift and go to state 23
+    SET             shift and go to state 21
 
 
 state 17
 
-    (60) update -> UPDATE DATASOURCE . SET assigns where SIME_COLON
+    (58) delete -> DELETE FROM . DATASOURCE where SIME_COLON
 
-    SET             shift and go to state 24
+    DATASOURCE      shift and go to state 22
 
 
 state 18
 
-    (63) delete -> DELETE FROM . DATASOURCE where SIME_COLON
+    (30) select -> SELECT column FROM . data into where order SIME_COLON
+    (47) data -> . DATASOURCE
 
-    DATASOURCE      shift and go to state 25
+    DATASOURCE      shift and go to state 24
 
+    data                           shift and go to state 23
 
 state 19
 
-    (30) select -> SELECT column into . FROM data where group order limit SIME_COLON
+    (45) column -> column COMAA . column
+    (42) column -> . TIMES
+    (43) column -> . COLUMN_NAME
+    (44) column -> . DATASOURCE
+    (45) column -> . column COMAA column
+    (46) column -> . empty
+    (12) empty -> .
 
-    FROM            shift and go to state 26
+    TIMES           shift and go to state 11
+    COLUMN_NAME     shift and go to state 12
+    DATASOURCE      shift and go to state 13
+    COMAA           reduce using rule 12 (empty -> .)
+    FROM            reduce using rule 12 (empty -> .)
+    EQUAL           reduce using rule 12 (empty -> .)
+    ASC             reduce using rule 12 (empty -> .)
+    DESC            reduce using rule 12 (empty -> .)
+    SIME_COLON      reduce using rule 12 (empty -> .)
 
+    column                         shift and go to state 25
+    empty                          shift and go to state 14
 
 state 20
 
-    (50) column -> column COMAA . column
-    (47) column -> . TIMES
-    (48) column -> . COLUMN_NAME
-    (49) column -> . DATASOURCE
-    (50) column -> . column COMAA column
-    (51) column -> . empty
-    (12) empty -> .
-
-    TIMES           shift and go to state 12
-    COLUMN_NAME     shift and go to state 13
-    DATASOURCE      shift and go to state 14
-    COMAA           reduce using rule 12 (empty -> .)
-    INTO            reduce using rule 12 (empty -> .)
-    FROM            reduce using rule 12 (empty -> .)
-    EQUAL           reduce using rule 12 (empty -> .)
-    HAVING          reduce using rule 12 (empty -> .)
-    ORDER           reduce using rule 12 (empty -> .)
-    LIMIT           reduce using rule 12 (empty -> .)
-    SIME_COLON      reduce using rule 12 (empty -> .)
-    ASC             reduce using rule 12 (empty -> .)
-    DESC            reduce using rule 12 (empty -> .)
-
-    column                         shift and go to state 27
-    empty                          shift and go to state 15
-
-state 21
-
-    (32) into -> INTO . DATASOURCE
-
-    DATASOURCE      shift and go to state 28
-
-
-state 22
-
-    (33) into -> empty .
-
-    FROM            reduce using rule 33 (into -> empty .)
-
-
-state 23
-
-    (53) insert -> INSERT INTO DATASOURCE . icolumn VALUES LPAREN value RPAREN SIME_COLON
-    (54) insert -> INSERT INTO DATASOURCE . icolumn LPAREN select RPAREN SIME_COLON
-    (58) icolumn -> . LPAREN COLUMN_NAME RPAREN
-    (59) icolumn -> . empty
+    (48) insert -> INSERT INTO DATASOURCE . icolumn VALUES LPAREN value RPAREN SIME_COLON
+    (49) insert -> INSERT INTO DATASOURCE . icolumn LPAREN select RPAREN SIME_COLON
+    (53) icolumn -> . LPAREN COLUMN_NAME RPAREN
+    (54) icolumn -> . empty
     (12) empty -> .
 
   ! shift/reduce conflict for LPAREN resolved as shift
-    LPAREN          shift and go to state 30
+    LPAREN          shift and go to state 27
     VALUES          reduce using rule 12 (empty -> .)
 
   ! LPAREN          [ reduce using rule 12 (empty -> .) ]
 
-    icolumn                        shift and go to state 29
-    empty                          shift and go to state 31
+    icolumn                        shift and go to state 26
+    empty                          shift and go to state 28
 
-state 24
+state 21
 
-    (60) update -> UPDATE DATASOURCE SET . assigns where SIME_COLON
-    (61) assigns -> . column EQUAL value
-    (62) assigns -> . assigns COMAA assigns
-    (47) column -> . TIMES
-    (48) column -> . COLUMN_NAME
-    (49) column -> . DATASOURCE
-    (50) column -> . column COMAA column
-    (51) column -> . empty
+    (55) update -> UPDATE DATASOURCE SET . assigns where SIME_COLON
+    (56) assigns -> . column EQUAL value
+    (57) assigns -> . assigns COMAA assigns
+    (42) column -> . TIMES
+    (43) column -> . COLUMN_NAME
+    (44) column -> . DATASOURCE
+    (45) column -> . column COMAA column
+    (46) column -> . empty
     (12) empty -> .
 
-    TIMES           shift and go to state 12
-    COLUMN_NAME     shift and go to state 13
-    DATASOURCE      shift and go to state 14
+    TIMES           shift and go to state 11
+    COLUMN_NAME     shift and go to state 12
+    DATASOURCE      shift and go to state 13
     EQUAL           reduce using rule 12 (empty -> .)
     COMAA           reduce using rule 12 (empty -> .)
 
-    assigns                        shift and go to state 32
-    column                         shift and go to state 33
-    empty                          shift and go to state 15
+    assigns                        shift and go to state 29
+    column                         shift and go to state 30
+    empty                          shift and go to state 14
 
-state 25
+state 22
 
-    (63) delete -> DELETE FROM DATASOURCE . where SIME_COLON
+    (58) delete -> DELETE FROM DATASOURCE . where SIME_COLON
     (18) where -> . WHERE condition
     (19) where -> . empty
     (12) empty -> .
 
-    WHERE           shift and go to state 35
+    WHERE           shift and go to state 32
     SIME_COLON      reduce using rule 12 (empty -> .)
 
-    where                          shift and go to state 34
+    where                          shift and go to state 31
+    empty                          shift and go to state 33
+
+state 23
+
+    (30) select -> SELECT column FROM data . into where order SIME_COLON
+    (31) into -> . INTO data
+    (32) into -> . empty
+    (12) empty -> .
+
+    INTO            shift and go to state 35
+    WHERE           reduce using rule 12 (empty -> .)
+    ORDER           reduce using rule 12 (empty -> .)
+    SIME_COLON      reduce using rule 12 (empty -> .)
+
+    into                           shift and go to state 34
     empty                          shift and go to state 36
+
+state 24
+
+    (47) data -> DATASOURCE .
+
+    INTO            reduce using rule 47 (data -> DATASOURCE .)
+    WHERE           reduce using rule 47 (data -> DATASOURCE .)
+    ORDER           reduce using rule 47 (data -> DATASOURCE .)
+    SIME_COLON      reduce using rule 47 (data -> DATASOURCE .)
+
+
+state 25
+
+    (45) column -> column COMAA column .
+    (45) column -> column . COMAA column
+
+  ! shift/reduce conflict for COMAA resolved as shift
+    FROM            reduce using rule 45 (column -> column COMAA column .)
+    EQUAL           reduce using rule 45 (column -> column COMAA column .)
+    ASC             reduce using rule 45 (column -> column COMAA column .)
+    DESC            reduce using rule 45 (column -> column COMAA column .)
+    SIME_COLON      reduce using rule 45 (column -> column COMAA column .)
+    COMAA           shift and go to state 19
+
+  ! COMAA           [ reduce using rule 45 (column -> column COMAA column .) ]
+
 
 state 26
 
-    (30) select -> SELECT column into FROM . data where group order limit SIME_COLON
-    (52) data -> . DATASOURCE
+    (48) insert -> INSERT INTO DATASOURCE icolumn . VALUES LPAREN value RPAREN SIME_COLON
+    (49) insert -> INSERT INTO DATASOURCE icolumn . LPAREN select RPAREN SIME_COLON
 
-    DATASOURCE      shift and go to state 38
+    VALUES          shift and go to state 37
+    LPAREN          shift and go to state 38
 
-    data                           shift and go to state 37
 
 state 27
 
-    (50) column -> column COMAA column .
-    (50) column -> column . COMAA column
+    (53) icolumn -> LPAREN . COLUMN_NAME RPAREN
 
-  ! shift/reduce conflict for COMAA resolved as shift
-    INTO            reduce using rule 50 (column -> column COMAA column .)
-    FROM            reduce using rule 50 (column -> column COMAA column .)
-    EQUAL           reduce using rule 50 (column -> column COMAA column .)
-    HAVING          reduce using rule 50 (column -> column COMAA column .)
-    ORDER           reduce using rule 50 (column -> column COMAA column .)
-    LIMIT           reduce using rule 50 (column -> column COMAA column .)
-    SIME_COLON      reduce using rule 50 (column -> column COMAA column .)
-    ASC             reduce using rule 50 (column -> column COMAA column .)
-    DESC            reduce using rule 50 (column -> column COMAA column .)
-    COMAA           shift and go to state 20
-
-  ! COMAA           [ reduce using rule 50 (column -> column COMAA column .) ]
+    COLUMN_NAME     shift and go to state 39
 
 
 state 28
 
-    (32) into -> INTO DATASOURCE .
+    (54) icolumn -> empty .
 
-    FROM            reduce using rule 32 (into -> INTO DATASOURCE .)
+    VALUES          reduce using rule 54 (icolumn -> empty .)
+    LPAREN          reduce using rule 54 (icolumn -> empty .)
 
 
 state 29
 
-    (53) insert -> INSERT INTO DATASOURCE icolumn . VALUES LPAREN value RPAREN SIME_COLON
-    (54) insert -> INSERT INTO DATASOURCE icolumn . LPAREN select RPAREN SIME_COLON
-
-    VALUES          shift and go to state 39
-    LPAREN          shift and go to state 40
-
-
-state 30
-
-    (58) icolumn -> LPAREN . COLUMN_NAME RPAREN
-
-    COLUMN_NAME     shift and go to state 41
-
-
-state 31
-
-    (59) icolumn -> empty .
-
-    VALUES          reduce using rule 59 (icolumn -> empty .)
-    LPAREN          reduce using rule 59 (icolumn -> empty .)
-
-
-state 32
-
-    (60) update -> UPDATE DATASOURCE SET assigns . where SIME_COLON
-    (62) assigns -> assigns . COMAA assigns
+    (55) update -> UPDATE DATASOURCE SET assigns . where SIME_COLON
+    (57) assigns -> assigns . COMAA assigns
     (18) where -> . WHERE condition
     (19) where -> . empty
     (12) empty -> .
 
-    COMAA           shift and go to state 43
-    WHERE           shift and go to state 35
+    COMAA           shift and go to state 41
+    WHERE           shift and go to state 32
     SIME_COLON      reduce using rule 12 (empty -> .)
 
-    where                          shift and go to state 42
-    empty                          shift and go to state 36
+    where                          shift and go to state 40
+    empty                          shift and go to state 33
 
-state 33
+state 30
 
-    (61) assigns -> column . EQUAL value
-    (50) column -> column . COMAA column
+    (56) assigns -> column . EQUAL value
+    (45) column -> column . COMAA column
 
-    EQUAL           shift and go to state 44
-    COMAA           shift and go to state 20
-
-
-state 34
-
-    (63) delete -> DELETE FROM DATASOURCE where . SIME_COLON
-
-    SIME_COLON      shift and go to state 45
+    EQUAL           shift and go to state 42
+    COMAA           shift and go to state 19
 
 
-state 35
+state 31
+
+    (58) delete -> DELETE FROM DATASOURCE where . SIME_COLON
+
+    SIME_COLON      shift and go to state 43
+
+
+state 32
 
     (18) where -> WHERE . condition
     (20) condition -> . expression op expression
@@ -601,145 +550,142 @@ state 35
     (10) factor -> . NUMBER
     (11) factor -> . LPAREN expression RPAREN
 
-    LPAREN          shift and go to state 48
-    NOT             shift and go to state 49
-    COLUMN_NAME     shift and go to state 53
-    NUMBER          shift and go to state 54
-    STRING          shift and go to state 55
+    LPAREN          shift and go to state 46
+    NOT             shift and go to state 47
+    COLUMN_NAME     shift and go to state 51
+    NUMBER          shift and go to state 52
+    STRING          shift and go to state 53
 
-    condition                      shift and go to state 46
-    expression                     shift and go to state 47
-    term                           shift and go to state 50
-    expression_term                shift and go to state 51
-    factor                         shift and go to state 52
+    condition                      shift and go to state 44
+    expression                     shift and go to state 45
+    term                           shift and go to state 48
+    expression_term                shift and go to state 49
+    factor                         shift and go to state 50
 
-state 36
+state 33
 
     (19) where -> empty .
 
     SIME_COLON      reduce using rule 19 (where -> empty .)
-    GROUP           reduce using rule 19 (where -> empty .)
     ORDER           reduce using rule 19 (where -> empty .)
-    LIMIT           reduce using rule 19 (where -> empty .)
 
 
-state 37
+state 34
 
-    (30) select -> SELECT column into FROM data . where group order limit SIME_COLON
+    (30) select -> SELECT column FROM data into . where order SIME_COLON
     (18) where -> . WHERE condition
     (19) where -> . empty
     (12) empty -> .
 
-    WHERE           shift and go to state 35
-    GROUP           reduce using rule 12 (empty -> .)
+    WHERE           shift and go to state 32
     ORDER           reduce using rule 12 (empty -> .)
-    LIMIT           reduce using rule 12 (empty -> .)
     SIME_COLON      reduce using rule 12 (empty -> .)
 
-    where                          shift and go to state 56
-    empty                          shift and go to state 36
+    where                          shift and go to state 54
+    empty                          shift and go to state 33
+
+state 35
+
+    (31) into -> INTO . data
+    (47) data -> . DATASOURCE
+
+    DATASOURCE      shift and go to state 24
+
+    data                           shift and go to state 55
+
+state 36
+
+    (32) into -> empty .
+
+    WHERE           reduce using rule 32 (into -> empty .)
+    ORDER           reduce using rule 32 (into -> empty .)
+    SIME_COLON      reduce using rule 32 (into -> empty .)
+
+
+state 37
+
+    (48) insert -> INSERT INTO DATASOURCE icolumn VALUES . LPAREN value RPAREN SIME_COLON
+
+    LPAREN          shift and go to state 56
+
 
 state 38
 
-    (52) data -> DATASOURCE .
+    (49) insert -> INSERT INTO DATASOURCE icolumn LPAREN . select RPAREN SIME_COLON
+    (30) select -> . SELECT column FROM data into where order SIME_COLON
 
-    WHERE           reduce using rule 52 (data -> DATASOURCE .)
-    GROUP           reduce using rule 52 (data -> DATASOURCE .)
-    ORDER           reduce using rule 52 (data -> DATASOURCE .)
-    LIMIT           reduce using rule 52 (data -> DATASOURCE .)
-    SIME_COLON      reduce using rule 52 (data -> DATASOURCE .)
+    SELECT          shift and go to state 6
 
+    select                         shift and go to state 57
 
 state 39
 
-    (53) insert -> INSERT INTO DATASOURCE icolumn VALUES . LPAREN value RPAREN SIME_COLON
+    (53) icolumn -> LPAREN COLUMN_NAME . RPAREN
 
-    LPAREN          shift and go to state 57
+    RPAREN          shift and go to state 58
 
 
 state 40
 
-    (54) insert -> INSERT INTO DATASOURCE icolumn LPAREN . select RPAREN SIME_COLON
-    (30) select -> . SELECT column into FROM data where group order limit SIME_COLON
-    (31) select -> . empty
-    (12) empty -> .
+    (55) update -> UPDATE DATASOURCE SET assigns where . SIME_COLON
 
-    SELECT          shift and go to state 6
-    RPAREN          reduce using rule 12 (empty -> .)
+    SIME_COLON      shift and go to state 59
 
-    select                         shift and go to state 58
-    empty                          shift and go to state 7
 
 state 41
 
-    (58) icolumn -> LPAREN COLUMN_NAME . RPAREN
-
-    RPAREN          shift and go to state 59
-
-
-state 42
-
-    (60) update -> UPDATE DATASOURCE SET assigns where . SIME_COLON
-
-    SIME_COLON      shift and go to state 60
-
-
-state 43
-
-    (62) assigns -> assigns COMAA . assigns
-    (61) assigns -> . column EQUAL value
-    (62) assigns -> . assigns COMAA assigns
-    (47) column -> . TIMES
-    (48) column -> . COLUMN_NAME
-    (49) column -> . DATASOURCE
-    (50) column -> . column COMAA column
-    (51) column -> . empty
+    (57) assigns -> assigns COMAA . assigns
+    (56) assigns -> . column EQUAL value
+    (57) assigns -> . assigns COMAA assigns
+    (42) column -> . TIMES
+    (43) column -> . COLUMN_NAME
+    (44) column -> . DATASOURCE
+    (45) column -> . column COMAA column
+    (46) column -> . empty
     (12) empty -> .
 
-    TIMES           shift and go to state 12
-    COLUMN_NAME     shift and go to state 13
-    DATASOURCE      shift and go to state 14
+    TIMES           shift and go to state 11
+    COLUMN_NAME     shift and go to state 12
+    DATASOURCE      shift and go to state 13
     EQUAL           reduce using rule 12 (empty -> .)
     COMAA           reduce using rule 12 (empty -> .)
 
-    assigns                        shift and go to state 61
-    column                         shift and go to state 33
-    empty                          shift and go to state 15
+    assigns                        shift and go to state 60
+    column                         shift and go to state 30
+    empty                          shift and go to state 14
+
+state 42
+
+    (56) assigns -> column EQUAL . value
+    (50) value -> . STRING
+    (51) value -> . NUMBER
+    (52) value -> . value COMAA value
+
+    STRING          shift and go to state 62
+    NUMBER          shift and go to state 63
+
+    value                          shift and go to state 61
+
+state 43
+
+    (58) delete -> DELETE FROM DATASOURCE where SIME_COLON .
+
+    $end            reduce using rule 58 (delete -> DELETE FROM DATASOURCE where SIME_COLON .)
+
 
 state 44
-
-    (61) assigns -> column EQUAL . value
-    (55) value -> . STRING
-    (56) value -> . NUMBER
-    (57) value -> . value COMAA value
-
-    STRING          shift and go to state 63
-    NUMBER          shift and go to state 64
-
-    value                          shift and go to state 62
-
-state 45
-
-    (63) delete -> DELETE FROM DATASOURCE where SIME_COLON .
-
-    $end            reduce using rule 63 (delete -> DELETE FROM DATASOURCE where SIME_COLON .)
-
-
-state 46
 
     (18) where -> WHERE condition .
     (27) condition -> condition . AND condition
     (28) condition -> condition . OR condition
 
     SIME_COLON      reduce using rule 18 (where -> WHERE condition .)
-    GROUP           reduce using rule 18 (where -> WHERE condition .)
     ORDER           reduce using rule 18 (where -> WHERE condition .)
-    LIMIT           reduce using rule 18 (where -> WHERE condition .)
-    AND             shift and go to state 65
-    OR              shift and go to state 66
+    AND             shift and go to state 64
+    OR              shift and go to state 65
 
 
-state 47
+state 45
 
     (20) condition -> expression . op expression
     (5) expression -> expression . PLUS term
@@ -750,17 +696,17 @@ state 47
     (16) op -> . SMALLER_THAN_OR_EQUAL_TO
     (17) op -> . SMALLER_THAN
 
-    PLUS            shift and go to state 68
-    MINUS           shift and go to state 69
-    EQUAL           shift and go to state 70
-    BIGGER_THAN_OR_EQUAL_TO shift and go to state 71
-    BIGGER_THAN     shift and go to state 72
-    SMALLER_THAN_OR_EQUAL_TO shift and go to state 73
-    SMALLER_THAN    shift and go to state 74
+    PLUS            shift and go to state 67
+    MINUS           shift and go to state 68
+    EQUAL           shift and go to state 69
+    BIGGER_THAN_OR_EQUAL_TO shift and go to state 70
+    BIGGER_THAN     shift and go to state 71
+    SMALLER_THAN_OR_EQUAL_TO shift and go to state 72
+    SMALLER_THAN    shift and go to state 73
 
-    op                             shift and go to state 67
+    op                             shift and go to state 66
 
-state 48
+state 46
 
     (21) condition -> LPAREN . condition RPAREN
     (11) factor -> LPAREN . expression RPAREN
@@ -782,19 +728,19 @@ state 48
     (10) factor -> . NUMBER
     (11) factor -> . LPAREN expression RPAREN
 
-    LPAREN          shift and go to state 48
-    NOT             shift and go to state 49
-    COLUMN_NAME     shift and go to state 53
-    NUMBER          shift and go to state 54
-    STRING          shift and go to state 55
+    LPAREN          shift and go to state 46
+    NOT             shift and go to state 47
+    COLUMN_NAME     shift and go to state 51
+    NUMBER          shift and go to state 52
+    STRING          shift and go to state 53
 
-    condition                      shift and go to state 75
-    expression                     shift and go to state 76
-    term                           shift and go to state 50
-    expression_term                shift and go to state 51
-    factor                         shift and go to state 52
+    condition                      shift and go to state 74
+    expression                     shift and go to state 75
+    term                           shift and go to state 48
+    expression_term                shift and go to state 49
+    factor                         shift and go to state 50
 
-state 49
+state 47
 
     (29) condition -> NOT . condition
     (20) condition -> . expression op expression
@@ -815,19 +761,19 @@ state 49
     (10) factor -> . NUMBER
     (11) factor -> . LPAREN expression RPAREN
 
-    LPAREN          shift and go to state 48
-    NOT             shift and go to state 49
-    COLUMN_NAME     shift and go to state 53
-    NUMBER          shift and go to state 54
-    STRING          shift and go to state 55
+    LPAREN          shift and go to state 46
+    NOT             shift and go to state 47
+    COLUMN_NAME     shift and go to state 51
+    NUMBER          shift and go to state 52
+    STRING          shift and go to state 53
 
-    condition                      shift and go to state 77
-    expression                     shift and go to state 47
-    term                           shift and go to state 50
-    expression_term                shift and go to state 51
-    factor                         shift and go to state 52
+    condition                      shift and go to state 76
+    expression                     shift and go to state 45
+    term                           shift and go to state 48
+    expression_term                shift and go to state 49
+    factor                         shift and go to state 50
 
-state 50
+state 48
 
     (23) expression_term -> term .
     (7) term -> term . TIMES factor
@@ -844,14 +790,12 @@ state 50
     AND             reduce using rule 23 (expression_term -> term .)
     OR              reduce using rule 23 (expression_term -> term .)
     SIME_COLON      reduce using rule 23 (expression_term -> term .)
-    GROUP           reduce using rule 23 (expression_term -> term .)
     ORDER           reduce using rule 23 (expression_term -> term .)
-    LIMIT           reduce using rule 23 (expression_term -> term .)
-    TIMES           shift and go to state 78
-    DIVIDE          shift and go to state 79
+    TIMES           shift and go to state 77
+    DIVIDE          shift and go to state 78
 
 
-state 51
+state 49
 
     (22) expression -> expression_term .
 
@@ -866,12 +810,10 @@ state 51
     AND             reduce using rule 22 (expression -> expression_term .)
     OR              reduce using rule 22 (expression -> expression_term .)
     SIME_COLON      reduce using rule 22 (expression -> expression_term .)
-    GROUP           reduce using rule 22 (expression -> expression_term .)
     ORDER           reduce using rule 22 (expression -> expression_term .)
-    LIMIT           reduce using rule 22 (expression -> expression_term .)
 
 
-state 52
+state 50
 
     (9) term -> factor .
 
@@ -888,12 +830,10 @@ state 52
     AND             reduce using rule 9 (term -> factor .)
     OR              reduce using rule 9 (term -> factor .)
     SIME_COLON      reduce using rule 9 (term -> factor .)
-    GROUP           reduce using rule 9 (term -> factor .)
     ORDER           reduce using rule 9 (term -> factor .)
-    LIMIT           reduce using rule 9 (term -> factor .)
 
 
-state 53
+state 51
 
     (24) term -> COLUMN_NAME .
 
@@ -910,12 +850,10 @@ state 53
     AND             reduce using rule 24 (term -> COLUMN_NAME .)
     OR              reduce using rule 24 (term -> COLUMN_NAME .)
     SIME_COLON      reduce using rule 24 (term -> COLUMN_NAME .)
-    GROUP           reduce using rule 24 (term -> COLUMN_NAME .)
     ORDER           reduce using rule 24 (term -> COLUMN_NAME .)
-    LIMIT           reduce using rule 24 (term -> COLUMN_NAME .)
 
 
-state 54
+state 52
 
     (25) term -> NUMBER .
     (10) factor -> NUMBER .
@@ -933,9 +871,7 @@ state 54
   ! reduce/reduce conflict for AND resolved using rule 10 (factor -> NUMBER .)
   ! reduce/reduce conflict for OR resolved using rule 10 (factor -> NUMBER .)
   ! reduce/reduce conflict for SIME_COLON resolved using rule 10 (factor -> NUMBER .)
-  ! reduce/reduce conflict for GROUP resolved using rule 10 (factor -> NUMBER .)
   ! reduce/reduce conflict for ORDER resolved using rule 10 (factor -> NUMBER .)
-  ! reduce/reduce conflict for LIMIT resolved using rule 10 (factor -> NUMBER .)
     TIMES           reduce using rule 10 (factor -> NUMBER .)
     DIVIDE          reduce using rule 10 (factor -> NUMBER .)
     PLUS            reduce using rule 10 (factor -> NUMBER .)
@@ -949,9 +885,7 @@ state 54
     AND             reduce using rule 10 (factor -> NUMBER .)
     OR              reduce using rule 10 (factor -> NUMBER .)
     SIME_COLON      reduce using rule 10 (factor -> NUMBER .)
-    GROUP           reduce using rule 10 (factor -> NUMBER .)
     ORDER           reduce using rule 10 (factor -> NUMBER .)
-    LIMIT           reduce using rule 10 (factor -> NUMBER .)
 
   ! TIMES           [ reduce using rule 25 (term -> NUMBER .) ]
   ! DIVIDE          [ reduce using rule 25 (term -> NUMBER .) ]
@@ -966,12 +900,10 @@ state 54
   ! AND             [ reduce using rule 25 (term -> NUMBER .) ]
   ! OR              [ reduce using rule 25 (term -> NUMBER .) ]
   ! SIME_COLON      [ reduce using rule 25 (term -> NUMBER .) ]
-  ! GROUP           [ reduce using rule 25 (term -> NUMBER .) ]
   ! ORDER           [ reduce using rule 25 (term -> NUMBER .) ]
-  ! LIMIT           [ reduce using rule 25 (term -> NUMBER .) ]
 
 
-state 55
+state 53
 
     (26) term -> STRING .
 
@@ -988,107 +920,112 @@ state 55
     AND             reduce using rule 26 (term -> STRING .)
     OR              reduce using rule 26 (term -> STRING .)
     SIME_COLON      reduce using rule 26 (term -> STRING .)
-    GROUP           reduce using rule 26 (term -> STRING .)
     ORDER           reduce using rule 26 (term -> STRING .)
-    LIMIT           reduce using rule 26 (term -> STRING .)
+
+
+state 54
+
+    (30) select -> SELECT column FROM data into where . order SIME_COLON
+    (35) order -> . ORDER BY orders
+    (36) order -> . empty
+    (12) empty -> .
+
+    ORDER           shift and go to state 80
+    SIME_COLON      reduce using rule 12 (empty -> .)
+
+    order                          shift and go to state 79
+    empty                          shift and go to state 81
+
+state 55
+
+    (31) into -> INTO data .
+
+    WHERE           reduce using rule 31 (into -> INTO data .)
+    ORDER           reduce using rule 31 (into -> INTO data .)
+    SIME_COLON      reduce using rule 31 (into -> INTO data .)
 
 
 state 56
 
-    (30) select -> SELECT column into FROM data where . group order limit SIME_COLON
-    (34) group -> . GROUP BY column having
-    (35) group -> . empty
-    (12) empty -> .
+    (48) insert -> INSERT INTO DATASOURCE icolumn VALUES LPAREN . value RPAREN SIME_COLON
+    (50) value -> . STRING
+    (51) value -> . NUMBER
+    (52) value -> . value COMAA value
 
-    GROUP           shift and go to state 81
-    ORDER           reduce using rule 12 (empty -> .)
-    LIMIT           reduce using rule 12 (empty -> .)
-    SIME_COLON      reduce using rule 12 (empty -> .)
+    STRING          shift and go to state 62
+    NUMBER          shift and go to state 63
 
-    group                          shift and go to state 80
-    empty                          shift and go to state 82
+    value                          shift and go to state 82
 
 state 57
 
-    (53) insert -> INSERT INTO DATASOURCE icolumn VALUES LPAREN . value RPAREN SIME_COLON
-    (55) value -> . STRING
-    (56) value -> . NUMBER
-    (57) value -> . value COMAA value
+    (49) insert -> INSERT INTO DATASOURCE icolumn LPAREN select . RPAREN SIME_COLON
 
-    STRING          shift and go to state 63
-    NUMBER          shift and go to state 64
+    RPAREN          shift and go to state 83
 
-    value                          shift and go to state 83
 
 state 58
 
-    (54) insert -> INSERT INTO DATASOURCE icolumn LPAREN select . RPAREN SIME_COLON
+    (53) icolumn -> LPAREN COLUMN_NAME RPAREN .
 
-    RPAREN          shift and go to state 84
+    VALUES          reduce using rule 53 (icolumn -> LPAREN COLUMN_NAME RPAREN .)
+    LPAREN          reduce using rule 53 (icolumn -> LPAREN COLUMN_NAME RPAREN .)
 
 
 state 59
 
-    (58) icolumn -> LPAREN COLUMN_NAME RPAREN .
+    (55) update -> UPDATE DATASOURCE SET assigns where SIME_COLON .
 
-    VALUES          reduce using rule 58 (icolumn -> LPAREN COLUMN_NAME RPAREN .)
-    LPAREN          reduce using rule 58 (icolumn -> LPAREN COLUMN_NAME RPAREN .)
+    $end            reduce using rule 55 (update -> UPDATE DATASOURCE SET assigns where SIME_COLON .)
 
 
 state 60
 
-    (60) update -> UPDATE DATASOURCE SET assigns where SIME_COLON .
+    (57) assigns -> assigns COMAA assigns .
+    (57) assigns -> assigns . COMAA assigns
 
-    $end            reduce using rule 60 (update -> UPDATE DATASOURCE SET assigns where SIME_COLON .)
+  ! shift/reduce conflict for COMAA resolved as shift
+    WHERE           reduce using rule 57 (assigns -> assigns COMAA assigns .)
+    SIME_COLON      reduce using rule 57 (assigns -> assigns COMAA assigns .)
+    COMAA           shift and go to state 41
+
+  ! COMAA           [ reduce using rule 57 (assigns -> assigns COMAA assigns .) ]
 
 
 state 61
 
-    (62) assigns -> assigns COMAA assigns .
-    (62) assigns -> assigns . COMAA assigns
+    (56) assigns -> column EQUAL value .
+    (52) value -> value . COMAA value
 
   ! shift/reduce conflict for COMAA resolved as shift
-    WHERE           reduce using rule 62 (assigns -> assigns COMAA assigns .)
-    SIME_COLON      reduce using rule 62 (assigns -> assigns COMAA assigns .)
-    COMAA           shift and go to state 43
+    WHERE           reduce using rule 56 (assigns -> column EQUAL value .)
+    SIME_COLON      reduce using rule 56 (assigns -> column EQUAL value .)
+    COMAA           shift and go to state 84
 
-  ! COMAA           [ reduce using rule 62 (assigns -> assigns COMAA assigns .) ]
+  ! COMAA           [ reduce using rule 56 (assigns -> column EQUAL value .) ]
 
 
 state 62
 
-    (61) assigns -> column EQUAL value .
-    (57) value -> value . COMAA value
+    (50) value -> STRING .
 
-  ! shift/reduce conflict for COMAA resolved as shift
-    WHERE           reduce using rule 61 (assigns -> column EQUAL value .)
-    SIME_COLON      reduce using rule 61 (assigns -> column EQUAL value .)
-    COMAA           shift and go to state 85
-
-  ! COMAA           [ reduce using rule 61 (assigns -> column EQUAL value .) ]
+    COMAA           reduce using rule 50 (value -> STRING .)
+    WHERE           reduce using rule 50 (value -> STRING .)
+    SIME_COLON      reduce using rule 50 (value -> STRING .)
+    RPAREN          reduce using rule 50 (value -> STRING .)
 
 
 state 63
 
-    (55) value -> STRING .
+    (51) value -> NUMBER .
 
-    COMAA           reduce using rule 55 (value -> STRING .)
-    WHERE           reduce using rule 55 (value -> STRING .)
-    SIME_COLON      reduce using rule 55 (value -> STRING .)
-    RPAREN          reduce using rule 55 (value -> STRING .)
+    COMAA           reduce using rule 51 (value -> NUMBER .)
+    WHERE           reduce using rule 51 (value -> NUMBER .)
+    SIME_COLON      reduce using rule 51 (value -> NUMBER .)
+    RPAREN          reduce using rule 51 (value -> NUMBER .)
 
 
 state 64
-
-    (56) value -> NUMBER .
-
-    COMAA           reduce using rule 56 (value -> NUMBER .)
-    WHERE           reduce using rule 56 (value -> NUMBER .)
-    SIME_COLON      reduce using rule 56 (value -> NUMBER .)
-    RPAREN          reduce using rule 56 (value -> NUMBER .)
-
-
-state 65
 
     (27) condition -> condition AND . condition
     (20) condition -> . expression op expression
@@ -1109,19 +1046,19 @@ state 65
     (10) factor -> . NUMBER
     (11) factor -> . LPAREN expression RPAREN
 
-    LPAREN          shift and go to state 48
-    NOT             shift and go to state 49
-    COLUMN_NAME     shift and go to state 53
-    NUMBER          shift and go to state 54
-    STRING          shift and go to state 55
+    LPAREN          shift and go to state 46
+    NOT             shift and go to state 47
+    COLUMN_NAME     shift and go to state 51
+    NUMBER          shift and go to state 52
+    STRING          shift and go to state 53
 
-    condition                      shift and go to state 86
-    expression                     shift and go to state 47
-    term                           shift and go to state 50
-    expression_term                shift and go to state 51
-    factor                         shift and go to state 52
+    condition                      shift and go to state 85
+    expression                     shift and go to state 45
+    term                           shift and go to state 48
+    expression_term                shift and go to state 49
+    factor                         shift and go to state 50
 
-state 66
+state 65
 
     (28) condition -> condition OR . condition
     (20) condition -> . expression op expression
@@ -1142,19 +1079,19 @@ state 66
     (10) factor -> . NUMBER
     (11) factor -> . LPAREN expression RPAREN
 
-    LPAREN          shift and go to state 48
-    NOT             shift and go to state 49
-    COLUMN_NAME     shift and go to state 53
-    NUMBER          shift and go to state 54
-    STRING          shift and go to state 55
+    LPAREN          shift and go to state 46
+    NOT             shift and go to state 47
+    COLUMN_NAME     shift and go to state 51
+    NUMBER          shift and go to state 52
+    STRING          shift and go to state 53
 
-    condition                      shift and go to state 87
-    expression                     shift and go to state 47
-    term                           shift and go to state 50
-    expression_term                shift and go to state 51
-    factor                         shift and go to state 52
+    condition                      shift and go to state 86
+    expression                     shift and go to state 45
+    term                           shift and go to state 48
+    expression_term                shift and go to state 49
+    factor                         shift and go to state 50
 
-state 67
+state 66
 
     (20) condition -> expression op . expression
     (5) expression -> . expression PLUS term
@@ -1170,17 +1107,17 @@ state 67
     (10) factor -> . NUMBER
     (11) factor -> . LPAREN expression RPAREN
 
-    COLUMN_NAME     shift and go to state 53
-    NUMBER          shift and go to state 54
-    STRING          shift and go to state 55
-    LPAREN          shift and go to state 89
+    COLUMN_NAME     shift and go to state 51
+    NUMBER          shift and go to state 52
+    STRING          shift and go to state 53
+    LPAREN          shift and go to state 88
 
-    expression                     shift and go to state 88
-    term                           shift and go to state 50
-    expression_term                shift and go to state 51
-    factor                         shift and go to state 52
+    expression                     shift and go to state 87
+    term                           shift and go to state 48
+    expression_term                shift and go to state 49
+    factor                         shift and go to state 50
 
-state 68
+state 67
 
     (5) expression -> expression PLUS . term
     (7) term -> . term TIMES factor
@@ -1192,15 +1129,15 @@ state 68
     (10) factor -> . NUMBER
     (11) factor -> . LPAREN expression RPAREN
 
-    COLUMN_NAME     shift and go to state 53
-    NUMBER          shift and go to state 54
-    STRING          shift and go to state 55
-    LPAREN          shift and go to state 89
+    COLUMN_NAME     shift and go to state 51
+    NUMBER          shift and go to state 52
+    STRING          shift and go to state 53
+    LPAREN          shift and go to state 88
 
-    term                           shift and go to state 90
-    factor                         shift and go to state 52
+    term                           shift and go to state 89
+    factor                         shift and go to state 50
 
-state 69
+state 68
 
     (6) expression -> expression MINUS . term
     (7) term -> . term TIMES factor
@@ -1212,15 +1149,15 @@ state 69
     (10) factor -> . NUMBER
     (11) factor -> . LPAREN expression RPAREN
 
-    COLUMN_NAME     shift and go to state 53
-    NUMBER          shift and go to state 54
-    STRING          shift and go to state 55
-    LPAREN          shift and go to state 89
+    COLUMN_NAME     shift and go to state 51
+    NUMBER          shift and go to state 52
+    STRING          shift and go to state 53
+    LPAREN          shift and go to state 88
 
-    term                           shift and go to state 91
-    factor                         shift and go to state 52
+    term                           shift and go to state 90
+    factor                         shift and go to state 50
 
-state 70
+state 69
 
     (13) op -> EQUAL .
 
@@ -1230,7 +1167,7 @@ state 70
     LPAREN          reduce using rule 13 (op -> EQUAL .)
 
 
-state 71
+state 70
 
     (14) op -> BIGGER_THAN_OR_EQUAL_TO .
 
@@ -1240,7 +1177,7 @@ state 71
     LPAREN          reduce using rule 14 (op -> BIGGER_THAN_OR_EQUAL_TO .)
 
 
-state 72
+state 71
 
     (15) op -> BIGGER_THAN .
 
@@ -1250,7 +1187,7 @@ state 72
     LPAREN          reduce using rule 15 (op -> BIGGER_THAN .)
 
 
-state 73
+state 72
 
     (16) op -> SMALLER_THAN_OR_EQUAL_TO .
 
@@ -1260,7 +1197,7 @@ state 73
     LPAREN          reduce using rule 16 (op -> SMALLER_THAN_OR_EQUAL_TO .)
 
 
-state 74
+state 73
 
     (17) op -> SMALLER_THAN .
 
@@ -1270,18 +1207,18 @@ state 74
     LPAREN          reduce using rule 17 (op -> SMALLER_THAN .)
 
 
-state 75
+state 74
 
     (21) condition -> LPAREN condition . RPAREN
     (27) condition -> condition . AND condition
     (28) condition -> condition . OR condition
 
-    RPAREN          shift and go to state 92
-    AND             shift and go to state 65
-    OR              shift and go to state 66
+    RPAREN          shift and go to state 91
+    AND             shift and go to state 64
+    OR              shift and go to state 65
 
 
-state 76
+state 75
 
     (11) factor -> LPAREN expression . RPAREN
     (20) condition -> expression . op expression
@@ -1293,18 +1230,18 @@ state 76
     (16) op -> . SMALLER_THAN_OR_EQUAL_TO
     (17) op -> . SMALLER_THAN
 
-    RPAREN          shift and go to state 93
-    PLUS            shift and go to state 68
-    MINUS           shift and go to state 69
-    EQUAL           shift and go to state 70
-    BIGGER_THAN_OR_EQUAL_TO shift and go to state 71
-    BIGGER_THAN     shift and go to state 72
-    SMALLER_THAN_OR_EQUAL_TO shift and go to state 73
-    SMALLER_THAN    shift and go to state 74
+    RPAREN          shift and go to state 92
+    PLUS            shift and go to state 67
+    MINUS           shift and go to state 68
+    EQUAL           shift and go to state 69
+    BIGGER_THAN_OR_EQUAL_TO shift and go to state 70
+    BIGGER_THAN     shift and go to state 71
+    SMALLER_THAN_OR_EQUAL_TO shift and go to state 72
+    SMALLER_THAN    shift and go to state 73
 
-    op                             shift and go to state 67
+    op                             shift and go to state 66
 
-state 77
+state 76
 
     (29) condition -> NOT condition .
     (27) condition -> condition . AND condition
@@ -1313,98 +1250,87 @@ state 77
   ! shift/reduce conflict for AND resolved as shift
   ! shift/reduce conflict for OR resolved as shift
     SIME_COLON      reduce using rule 29 (condition -> NOT condition .)
-    GROUP           reduce using rule 29 (condition -> NOT condition .)
     ORDER           reduce using rule 29 (condition -> NOT condition .)
-    LIMIT           reduce using rule 29 (condition -> NOT condition .)
     RPAREN          reduce using rule 29 (condition -> NOT condition .)
-    AND             shift and go to state 65
-    OR              shift and go to state 66
+    AND             shift and go to state 64
+    OR              shift and go to state 65
 
   ! AND             [ reduce using rule 29 (condition -> NOT condition .) ]
   ! OR              [ reduce using rule 29 (condition -> NOT condition .) ]
 
 
-state 78
+state 77
 
     (7) term -> term TIMES . factor
     (10) factor -> . NUMBER
     (11) factor -> . LPAREN expression RPAREN
 
-    NUMBER          shift and go to state 95
-    LPAREN          shift and go to state 89
+    NUMBER          shift and go to state 94
+    LPAREN          shift and go to state 88
 
-    factor                         shift and go to state 94
+    factor                         shift and go to state 93
 
-state 79
+state 78
 
     (8) term -> term DIVIDE . factor
     (10) factor -> . NUMBER
     (11) factor -> . LPAREN expression RPAREN
 
-    NUMBER          shift and go to state 95
-    LPAREN          shift and go to state 89
+    NUMBER          shift and go to state 94
+    LPAREN          shift and go to state 88
 
-    factor                         shift and go to state 96
+    factor                         shift and go to state 95
+
+state 79
+
+    (30) select -> SELECT column FROM data into where order . SIME_COLON
+
+    SIME_COLON      shift and go to state 96
+
 
 state 80
 
-    (30) select -> SELECT column into FROM data where group . order limit SIME_COLON
-    (38) order -> . ORDER BY orders
-    (39) order -> . empty
-    (12) empty -> .
+    (35) order -> ORDER . BY orders
 
-    ORDER           shift and go to state 98
-    LIMIT           reduce using rule 12 (empty -> .)
-    SIME_COLON      reduce using rule 12 (empty -> .)
+    BY              shift and go to state 97
 
-    order                          shift and go to state 97
-    empty                          shift and go to state 99
 
 state 81
 
-    (34) group -> GROUP . BY column having
+    (36) order -> empty .
 
-    BY              shift and go to state 100
+    SIME_COLON      reduce using rule 36 (order -> empty .)
 
 
 state 82
 
-    (35) group -> empty .
+    (48) insert -> INSERT INTO DATASOURCE icolumn VALUES LPAREN value . RPAREN SIME_COLON
+    (52) value -> value . COMAA value
 
-    ORDER           reduce using rule 35 (group -> empty .)
-    LIMIT           reduce using rule 35 (group -> empty .)
-    SIME_COLON      reduce using rule 35 (group -> empty .)
+    RPAREN          shift and go to state 98
+    COMAA           shift and go to state 84
 
 
 state 83
 
-    (53) insert -> INSERT INTO DATASOURCE icolumn VALUES LPAREN value . RPAREN SIME_COLON
-    (57) value -> value . COMAA value
+    (49) insert -> INSERT INTO DATASOURCE icolumn LPAREN select RPAREN . SIME_COLON
 
-    RPAREN          shift and go to state 101
-    COMAA           shift and go to state 85
+    SIME_COLON      shift and go to state 99
 
 
 state 84
 
-    (54) insert -> INSERT INTO DATASOURCE icolumn LPAREN select RPAREN . SIME_COLON
+    (52) value -> value COMAA . value
+    (50) value -> . STRING
+    (51) value -> . NUMBER
+    (52) value -> . value COMAA value
 
-    SIME_COLON      shift and go to state 102
+    STRING          shift and go to state 62
+    NUMBER          shift and go to state 63
 
+    value                          shift and go to state 100
 
 state 85
-
-    (57) value -> value COMAA . value
-    (55) value -> . STRING
-    (56) value -> . NUMBER
-    (57) value -> . value COMAA value
-
-    STRING          shift and go to state 63
-    NUMBER          shift and go to state 64
-
-    value                          shift and go to state 103
-
-state 86
 
     (27) condition -> condition AND condition .
     (27) condition -> condition . AND condition
@@ -1413,18 +1339,16 @@ state 86
   ! shift/reduce conflict for AND resolved as shift
   ! shift/reduce conflict for OR resolved as shift
     SIME_COLON      reduce using rule 27 (condition -> condition AND condition .)
-    GROUP           reduce using rule 27 (condition -> condition AND condition .)
     ORDER           reduce using rule 27 (condition -> condition AND condition .)
-    LIMIT           reduce using rule 27 (condition -> condition AND condition .)
     RPAREN          reduce using rule 27 (condition -> condition AND condition .)
-    AND             shift and go to state 65
-    OR              shift and go to state 66
+    AND             shift and go to state 64
+    OR              shift and go to state 65
 
   ! AND             [ reduce using rule 27 (condition -> condition AND condition .) ]
   ! OR              [ reduce using rule 27 (condition -> condition AND condition .) ]
 
 
-state 87
+state 86
 
     (28) condition -> condition OR condition .
     (27) condition -> condition . AND condition
@@ -1433,18 +1357,16 @@ state 87
   ! shift/reduce conflict for AND resolved as shift
   ! shift/reduce conflict for OR resolved as shift
     SIME_COLON      reduce using rule 28 (condition -> condition OR condition .)
-    GROUP           reduce using rule 28 (condition -> condition OR condition .)
     ORDER           reduce using rule 28 (condition -> condition OR condition .)
-    LIMIT           reduce using rule 28 (condition -> condition OR condition .)
     RPAREN          reduce using rule 28 (condition -> condition OR condition .)
-    AND             shift and go to state 65
-    OR              shift and go to state 66
+    AND             shift and go to state 64
+    OR              shift and go to state 65
 
   ! AND             [ reduce using rule 28 (condition -> condition OR condition .) ]
   ! OR              [ reduce using rule 28 (condition -> condition OR condition .) ]
 
 
-state 88
+state 87
 
     (20) condition -> expression op expression .
     (5) expression -> expression . PLUS term
@@ -1453,15 +1375,13 @@ state 88
     AND             reduce using rule 20 (condition -> expression op expression .)
     OR              reduce using rule 20 (condition -> expression op expression .)
     SIME_COLON      reduce using rule 20 (condition -> expression op expression .)
-    GROUP           reduce using rule 20 (condition -> expression op expression .)
     ORDER           reduce using rule 20 (condition -> expression op expression .)
-    LIMIT           reduce using rule 20 (condition -> expression op expression .)
     RPAREN          reduce using rule 20 (condition -> expression op expression .)
-    PLUS            shift and go to state 68
-    MINUS           shift and go to state 69
+    PLUS            shift and go to state 67
+    MINUS           shift and go to state 68
 
 
-state 89
+state 88
 
     (11) factor -> LPAREN . expression RPAREN
     (5) expression -> . expression PLUS term
@@ -1477,17 +1397,17 @@ state 89
     (10) factor -> . NUMBER
     (11) factor -> . LPAREN expression RPAREN
 
-    COLUMN_NAME     shift and go to state 53
-    NUMBER          shift and go to state 54
-    STRING          shift and go to state 55
-    LPAREN          shift and go to state 89
+    COLUMN_NAME     shift and go to state 51
+    NUMBER          shift and go to state 52
+    STRING          shift and go to state 53
+    LPAREN          shift and go to state 88
 
-    expression                     shift and go to state 104
-    term                           shift and go to state 50
-    expression_term                shift and go to state 51
-    factor                         shift and go to state 52
+    expression                     shift and go to state 101
+    term                           shift and go to state 48
+    expression_term                shift and go to state 49
+    factor                         shift and go to state 50
 
-state 90
+state 89
 
     (5) expression -> expression PLUS term .
     (7) term -> term . TIMES factor
@@ -1504,14 +1424,12 @@ state 90
     AND             reduce using rule 5 (expression -> expression PLUS term .)
     OR              reduce using rule 5 (expression -> expression PLUS term .)
     SIME_COLON      reduce using rule 5 (expression -> expression PLUS term .)
-    GROUP           reduce using rule 5 (expression -> expression PLUS term .)
     ORDER           reduce using rule 5 (expression -> expression PLUS term .)
-    LIMIT           reduce using rule 5 (expression -> expression PLUS term .)
-    TIMES           shift and go to state 78
-    DIVIDE          shift and go to state 79
+    TIMES           shift and go to state 77
+    DIVIDE          shift and go to state 78
 
 
-state 91
+state 90
 
     (6) expression -> expression MINUS term .
     (7) term -> term . TIMES factor
@@ -1528,27 +1446,23 @@ state 91
     AND             reduce using rule 6 (expression -> expression MINUS term .)
     OR              reduce using rule 6 (expression -> expression MINUS term .)
     SIME_COLON      reduce using rule 6 (expression -> expression MINUS term .)
-    GROUP           reduce using rule 6 (expression -> expression MINUS term .)
     ORDER           reduce using rule 6 (expression -> expression MINUS term .)
-    LIMIT           reduce using rule 6 (expression -> expression MINUS term .)
-    TIMES           shift and go to state 78
-    DIVIDE          shift and go to state 79
+    TIMES           shift and go to state 77
+    DIVIDE          shift and go to state 78
 
 
-state 92
+state 91
 
     (21) condition -> LPAREN condition RPAREN .
 
     AND             reduce using rule 21 (condition -> LPAREN condition RPAREN .)
     OR              reduce using rule 21 (condition -> LPAREN condition RPAREN .)
     SIME_COLON      reduce using rule 21 (condition -> LPAREN condition RPAREN .)
-    GROUP           reduce using rule 21 (condition -> LPAREN condition RPAREN .)
     ORDER           reduce using rule 21 (condition -> LPAREN condition RPAREN .)
-    LIMIT           reduce using rule 21 (condition -> LPAREN condition RPAREN .)
     RPAREN          reduce using rule 21 (condition -> LPAREN condition RPAREN .)
 
 
-state 93
+state 92
 
     (11) factor -> LPAREN expression RPAREN .
 
@@ -1565,12 +1479,10 @@ state 93
     AND             reduce using rule 11 (factor -> LPAREN expression RPAREN .)
     OR              reduce using rule 11 (factor -> LPAREN expression RPAREN .)
     SIME_COLON      reduce using rule 11 (factor -> LPAREN expression RPAREN .)
-    GROUP           reduce using rule 11 (factor -> LPAREN expression RPAREN .)
     ORDER           reduce using rule 11 (factor -> LPAREN expression RPAREN .)
-    LIMIT           reduce using rule 11 (factor -> LPAREN expression RPAREN .)
 
 
-state 94
+state 93
 
     (7) term -> term TIMES factor .
 
@@ -1587,12 +1499,10 @@ state 94
     AND             reduce using rule 7 (term -> term TIMES factor .)
     OR              reduce using rule 7 (term -> term TIMES factor .)
     SIME_COLON      reduce using rule 7 (term -> term TIMES factor .)
-    GROUP           reduce using rule 7 (term -> term TIMES factor .)
     ORDER           reduce using rule 7 (term -> term TIMES factor .)
-    LIMIT           reduce using rule 7 (term -> term TIMES factor .)
 
 
-state 95
+state 94
 
     (10) factor -> NUMBER .
 
@@ -1609,12 +1519,10 @@ state 95
     AND             reduce using rule 10 (factor -> NUMBER .)
     OR              reduce using rule 10 (factor -> NUMBER .)
     SIME_COLON      reduce using rule 10 (factor -> NUMBER .)
-    GROUP           reduce using rule 10 (factor -> NUMBER .)
     ORDER           reduce using rule 10 (factor -> NUMBER .)
-    LIMIT           reduce using rule 10 (factor -> NUMBER .)
 
 
-state 96
+state 95
 
     (8) term -> term DIVIDE factor .
 
@@ -1631,369 +1539,199 @@ state 96
     AND             reduce using rule 8 (term -> term DIVIDE factor .)
     OR              reduce using rule 8 (term -> term DIVIDE factor .)
     SIME_COLON      reduce using rule 8 (term -> term DIVIDE factor .)
-    GROUP           reduce using rule 8 (term -> term DIVIDE factor .)
     ORDER           reduce using rule 8 (term -> term DIVIDE factor .)
-    LIMIT           reduce using rule 8 (term -> term DIVIDE factor .)
+
+
+state 96
+
+    (30) select -> SELECT column FROM data into where order SIME_COLON .
+
+    $end            reduce using rule 30 (select -> SELECT column FROM data into where order SIME_COLON .)
+    RPAREN          reduce using rule 30 (select -> SELECT column FROM data into where order SIME_COLON .)
 
 
 state 97
 
-    (30) select -> SELECT column into FROM data where group order . limit SIME_COLON
-    (45) limit -> . LIMIT NUMBER
-    (46) limit -> . empty
+    (35) order -> ORDER BY . orders
+    (37) orders -> . column way
+    (38) orders -> . orders COMAA orders
+    (42) column -> . TIMES
+    (43) column -> . COLUMN_NAME
+    (44) column -> . DATASOURCE
+    (45) column -> . column COMAA column
+    (46) column -> . empty
     (12) empty -> .
 
-    LIMIT           shift and go to state 106
+    TIMES           shift and go to state 11
+    COLUMN_NAME     shift and go to state 12
+    DATASOURCE      shift and go to state 13
+    COMAA           reduce using rule 12 (empty -> .)
+    ASC             reduce using rule 12 (empty -> .)
+    DESC            reduce using rule 12 (empty -> .)
     SIME_COLON      reduce using rule 12 (empty -> .)
 
-    limit                          shift and go to state 105
-    empty                          shift and go to state 107
+    orders                         shift and go to state 102
+    column                         shift and go to state 103
+    empty                          shift and go to state 14
 
 state 98
 
-    (38) order -> ORDER . BY orders
+    (48) insert -> INSERT INTO DATASOURCE icolumn VALUES LPAREN value RPAREN . SIME_COLON
 
-    BY              shift and go to state 108
+    SIME_COLON      shift and go to state 104
 
 
 state 99
 
-    (39) order -> empty .
+    (49) insert -> INSERT INTO DATASOURCE icolumn LPAREN select RPAREN SIME_COLON .
 
-    LIMIT           reduce using rule 39 (order -> empty .)
-    SIME_COLON      reduce using rule 39 (order -> empty .)
+    $end            reduce using rule 49 (insert -> INSERT INTO DATASOURCE icolumn LPAREN select RPAREN SIME_COLON .)
 
 
 state 100
 
-    (34) group -> GROUP BY . column having
-    (47) column -> . TIMES
-    (48) column -> . COLUMN_NAME
-    (49) column -> . DATASOURCE
-    (50) column -> . column COMAA column
-    (51) column -> . empty
-    (12) empty -> .
-
-    TIMES           shift and go to state 12
-    COLUMN_NAME     shift and go to state 13
-    DATASOURCE      shift and go to state 14
-    COMAA           reduce using rule 12 (empty -> .)
-    HAVING          reduce using rule 12 (empty -> .)
-    ORDER           reduce using rule 12 (empty -> .)
-    LIMIT           reduce using rule 12 (empty -> .)
-    SIME_COLON      reduce using rule 12 (empty -> .)
-
-    column                         shift and go to state 109
-    empty                          shift and go to state 15
-
-state 101
-
-    (53) insert -> INSERT INTO DATASOURCE icolumn VALUES LPAREN value RPAREN . SIME_COLON
-
-    SIME_COLON      shift and go to state 110
-
-
-state 102
-
-    (54) insert -> INSERT INTO DATASOURCE icolumn LPAREN select RPAREN SIME_COLON .
-
-    $end            reduce using rule 54 (insert -> INSERT INTO DATASOURCE icolumn LPAREN select RPAREN SIME_COLON .)
-
-
-state 103
-
-    (57) value -> value COMAA value .
-    (57) value -> value . COMAA value
+    (52) value -> value COMAA value .
+    (52) value -> value . COMAA value
 
   ! shift/reduce conflict for COMAA resolved as shift
-    WHERE           reduce using rule 57 (value -> value COMAA value .)
-    SIME_COLON      reduce using rule 57 (value -> value COMAA value .)
-    RPAREN          reduce using rule 57 (value -> value COMAA value .)
-    COMAA           shift and go to state 85
+    WHERE           reduce using rule 52 (value -> value COMAA value .)
+    SIME_COLON      reduce using rule 52 (value -> value COMAA value .)
+    RPAREN          reduce using rule 52 (value -> value COMAA value .)
+    COMAA           shift and go to state 84
 
-  ! COMAA           [ reduce using rule 57 (value -> value COMAA value .) ]
+  ! COMAA           [ reduce using rule 52 (value -> value COMAA value .) ]
 
 
-state 104
+state 101
 
     (11) factor -> LPAREN expression . RPAREN
     (5) expression -> expression . PLUS term
     (6) expression -> expression . MINUS term
 
-    RPAREN          shift and go to state 93
-    PLUS            shift and go to state 68
-    MINUS           shift and go to state 69
+    RPAREN          shift and go to state 92
+    PLUS            shift and go to state 67
+    MINUS           shift and go to state 68
 
 
-state 105
+state 102
 
-    (30) select -> SELECT column into FROM data where group order limit . SIME_COLON
+    (35) order -> ORDER BY orders .
+    (38) orders -> orders . COMAA orders
 
-    SIME_COLON      shift and go to state 111
-
-
-state 106
-
-    (45) limit -> LIMIT . NUMBER
-
-    NUMBER          shift and go to state 112
+    SIME_COLON      reduce using rule 35 (order -> ORDER BY orders .)
+    COMAA           shift and go to state 105
 
 
-state 107
+state 103
 
-    (46) limit -> empty .
-
-    SIME_COLON      reduce using rule 46 (limit -> empty .)
-
-
-state 108
-
-    (38) order -> ORDER BY . orders
-    (40) orders -> . column way
-    (41) orders -> . orders COMAA orders
-    (47) column -> . TIMES
-    (48) column -> . COLUMN_NAME
-    (49) column -> . DATASOURCE
-    (50) column -> . column COMAA column
-    (51) column -> . empty
-    (12) empty -> .
-
-    TIMES           shift and go to state 12
-    COLUMN_NAME     shift and go to state 13
-    DATASOURCE      shift and go to state 14
-    COMAA           reduce using rule 12 (empty -> .)
-    ASC             reduce using rule 12 (empty -> .)
-    DESC            reduce using rule 12 (empty -> .)
-    LIMIT           reduce using rule 12 (empty -> .)
-    SIME_COLON      reduce using rule 12 (empty -> .)
-
-    orders                         shift and go to state 113
-    column                         shift and go to state 114
-    empty                          shift and go to state 15
-
-state 109
-
-    (34) group -> GROUP BY column . having
-    (50) column -> column . COMAA column
-    (36) having -> . HAVING condition
-    (37) having -> . empty
-    (12) empty -> .
-
-    COMAA           shift and go to state 20
-    HAVING          shift and go to state 116
-    ORDER           reduce using rule 12 (empty -> .)
-    LIMIT           reduce using rule 12 (empty -> .)
-    SIME_COLON      reduce using rule 12 (empty -> .)
-
-    having                         shift and go to state 115
-    empty                          shift and go to state 117
-
-state 110
-
-    (53) insert -> INSERT INTO DATASOURCE icolumn VALUES LPAREN value RPAREN SIME_COLON .
-
-    $end            reduce using rule 53 (insert -> INSERT INTO DATASOURCE icolumn VALUES LPAREN value RPAREN SIME_COLON .)
-
-
-state 111
-
-    (30) select -> SELECT column into FROM data where group order limit SIME_COLON .
-
-    $end            reduce using rule 30 (select -> SELECT column into FROM data where group order limit SIME_COLON .)
-    RPAREN          reduce using rule 30 (select -> SELECT column into FROM data where group order limit SIME_COLON .)
-
-
-state 112
-
-    (45) limit -> LIMIT NUMBER .
-
-    SIME_COLON      reduce using rule 45 (limit -> LIMIT NUMBER .)
-
-
-state 113
-
-    (38) order -> ORDER BY orders .
-    (41) orders -> orders . COMAA orders
-
-    LIMIT           reduce using rule 38 (order -> ORDER BY orders .)
-    SIME_COLON      reduce using rule 38 (order -> ORDER BY orders .)
-    COMAA           shift and go to state 118
-
-
-state 114
-
-    (40) orders -> column . way
-    (50) column -> column . COMAA column
-    (42) way -> . ASC
-    (43) way -> . DESC
-    (44) way -> . empty
+    (37) orders -> column . way
+    (45) column -> column . COMAA column
+    (39) way -> . ASC
+    (40) way -> . DESC
+    (41) way -> . empty
     (12) empty -> .
 
   ! shift/reduce conflict for COMAA resolved as shift
-    COMAA           shift and go to state 20
-    ASC             shift and go to state 120
-    DESC            shift and go to state 121
-    LIMIT           reduce using rule 12 (empty -> .)
+    COMAA           shift and go to state 19
+    ASC             shift and go to state 107
+    DESC            shift and go to state 108
     SIME_COLON      reduce using rule 12 (empty -> .)
 
   ! COMAA           [ reduce using rule 12 (empty -> .) ]
 
-    way                            shift and go to state 119
-    empty                          shift and go to state 122
+    way                            shift and go to state 106
+    empty                          shift and go to state 109
 
-state 115
+state 104
 
-    (34) group -> GROUP BY column having .
+    (48) insert -> INSERT INTO DATASOURCE icolumn VALUES LPAREN value RPAREN SIME_COLON .
 
-    ORDER           reduce using rule 34 (group -> GROUP BY column having .)
-    LIMIT           reduce using rule 34 (group -> GROUP BY column having .)
-    SIME_COLON      reduce using rule 34 (group -> GROUP BY column having .)
+    $end            reduce using rule 48 (insert -> INSERT INTO DATASOURCE icolumn VALUES LPAREN value RPAREN SIME_COLON .)
 
 
-state 116
+state 105
 
-    (36) having -> HAVING . condition
-    (20) condition -> . expression op expression
-    (21) condition -> . LPAREN condition RPAREN
-    (27) condition -> . condition AND condition
-    (28) condition -> . condition OR condition
-    (29) condition -> . NOT condition
-    (5) expression -> . expression PLUS term
-    (6) expression -> . expression MINUS term
-    (22) expression -> . expression_term
-    (23) expression_term -> . term
-    (7) term -> . term TIMES factor
-    (8) term -> . term DIVIDE factor
-    (9) term -> . factor
-    (24) term -> . COLUMN_NAME
-    (25) term -> . NUMBER
-    (26) term -> . STRING
-    (10) factor -> . NUMBER
-    (11) factor -> . LPAREN expression RPAREN
-
-    LPAREN          shift and go to state 48
-    NOT             shift and go to state 49
-    COLUMN_NAME     shift and go to state 53
-    NUMBER          shift and go to state 54
-    STRING          shift and go to state 55
-
-    condition                      shift and go to state 123
-    expression                     shift and go to state 47
-    term                           shift and go to state 50
-    expression_term                shift and go to state 51
-    factor                         shift and go to state 52
-
-state 117
-
-    (37) having -> empty .
-
-    ORDER           reduce using rule 37 (having -> empty .)
-    LIMIT           reduce using rule 37 (having -> empty .)
-    SIME_COLON      reduce using rule 37 (having -> empty .)
-
-
-state 118
-
-    (41) orders -> orders COMAA . orders
-    (40) orders -> . column way
-    (41) orders -> . orders COMAA orders
-    (47) column -> . TIMES
-    (48) column -> . COLUMN_NAME
-    (49) column -> . DATASOURCE
-    (50) column -> . column COMAA column
-    (51) column -> . empty
+    (38) orders -> orders COMAA . orders
+    (37) orders -> . column way
+    (38) orders -> . orders COMAA orders
+    (42) column -> . TIMES
+    (43) column -> . COLUMN_NAME
+    (44) column -> . DATASOURCE
+    (45) column -> . column COMAA column
+    (46) column -> . empty
     (12) empty -> .
 
-    TIMES           shift and go to state 12
-    COLUMN_NAME     shift and go to state 13
-    DATASOURCE      shift and go to state 14
+    TIMES           shift and go to state 11
+    COLUMN_NAME     shift and go to state 12
+    DATASOURCE      shift and go to state 13
     COMAA           reduce using rule 12 (empty -> .)
     ASC             reduce using rule 12 (empty -> .)
     DESC            reduce using rule 12 (empty -> .)
-    LIMIT           reduce using rule 12 (empty -> .)
     SIME_COLON      reduce using rule 12 (empty -> .)
 
-    orders                         shift and go to state 124
-    column                         shift and go to state 114
-    empty                          shift and go to state 15
+    orders                         shift and go to state 110
+    column                         shift and go to state 103
+    empty                          shift and go to state 14
 
-state 119
+state 106
 
-    (40) orders -> column way .
+    (37) orders -> column way .
 
-    COMAA           reduce using rule 40 (orders -> column way .)
-    LIMIT           reduce using rule 40 (orders -> column way .)
-    SIME_COLON      reduce using rule 40 (orders -> column way .)
-
-
-state 120
-
-    (42) way -> ASC .
-
-    COMAA           reduce using rule 42 (way -> ASC .)
-    LIMIT           reduce using rule 42 (way -> ASC .)
-    SIME_COLON      reduce using rule 42 (way -> ASC .)
+    COMAA           reduce using rule 37 (orders -> column way .)
+    SIME_COLON      reduce using rule 37 (orders -> column way .)
 
 
-state 121
+state 107
 
-    (43) way -> DESC .
+    (39) way -> ASC .
 
-    COMAA           reduce using rule 43 (way -> DESC .)
-    LIMIT           reduce using rule 43 (way -> DESC .)
-    SIME_COLON      reduce using rule 43 (way -> DESC .)
-
-
-state 122
-
-    (44) way -> empty .
-
-    COMAA           reduce using rule 44 (way -> empty .)
-    LIMIT           reduce using rule 44 (way -> empty .)
-    SIME_COLON      reduce using rule 44 (way -> empty .)
+    COMAA           reduce using rule 39 (way -> ASC .)
+    SIME_COLON      reduce using rule 39 (way -> ASC .)
 
 
-state 123
+state 108
 
-    (36) having -> HAVING condition .
-    (27) condition -> condition . AND condition
-    (28) condition -> condition . OR condition
+    (40) way -> DESC .
 
-    ORDER           reduce using rule 36 (having -> HAVING condition .)
-    LIMIT           reduce using rule 36 (having -> HAVING condition .)
-    SIME_COLON      reduce using rule 36 (having -> HAVING condition .)
-    AND             shift and go to state 65
-    OR              shift and go to state 66
+    COMAA           reduce using rule 40 (way -> DESC .)
+    SIME_COLON      reduce using rule 40 (way -> DESC .)
 
 
-state 124
+state 109
 
-    (41) orders -> orders COMAA orders .
-    (41) orders -> orders . COMAA orders
+    (41) way -> empty .
+
+    COMAA           reduce using rule 41 (way -> empty .)
+    SIME_COLON      reduce using rule 41 (way -> empty .)
+
+
+state 110
+
+    (38) orders -> orders COMAA orders .
+    (38) orders -> orders . COMAA orders
 
   ! shift/reduce conflict for COMAA resolved as shift
-    LIMIT           reduce using rule 41 (orders -> orders COMAA orders .)
-    SIME_COLON      reduce using rule 41 (orders -> orders COMAA orders .)
-    COMAA           shift and go to state 118
+    SIME_COLON      reduce using rule 38 (orders -> orders COMAA orders .)
+    COMAA           shift and go to state 105
 
-  ! COMAA           [ reduce using rule 41 (orders -> orders COMAA orders .) ]
+  ! COMAA           [ reduce using rule 38 (orders -> orders COMAA orders .) ]
 
 WARNING: 
 WARNING: Conflicts:
 WARNING: 
-WARNING: shift/reduce conflict for LPAREN in state 23 resolved as shift
-WARNING: shift/reduce conflict for COMAA in state 27 resolved as shift
+WARNING: shift/reduce conflict for LPAREN in state 20 resolved as shift
+WARNING: shift/reduce conflict for COMAA in state 25 resolved as shift
+WARNING: shift/reduce conflict for COMAA in state 60 resolved as shift
 WARNING: shift/reduce conflict for COMAA in state 61 resolved as shift
-WARNING: shift/reduce conflict for COMAA in state 62 resolved as shift
-WARNING: shift/reduce conflict for AND in state 77 resolved as shift
-WARNING: shift/reduce conflict for OR in state 77 resolved as shift
+WARNING: shift/reduce conflict for AND in state 76 resolved as shift
+WARNING: shift/reduce conflict for OR in state 76 resolved as shift
+WARNING: shift/reduce conflict for AND in state 85 resolved as shift
+WARNING: shift/reduce conflict for OR in state 85 resolved as shift
 WARNING: shift/reduce conflict for AND in state 86 resolved as shift
 WARNING: shift/reduce conflict for OR in state 86 resolved as shift
-WARNING: shift/reduce conflict for AND in state 87 resolved as shift
-WARNING: shift/reduce conflict for OR in state 87 resolved as shift
+WARNING: shift/reduce conflict for COMAA in state 100 resolved as shift
 WARNING: shift/reduce conflict for COMAA in state 103 resolved as shift
-WARNING: shift/reduce conflict for COMAA in state 114 resolved as shift
-WARNING: shift/reduce conflict for COMAA in state 124 resolved as shift
-WARNING: reduce/reduce conflict in state 54 resolved using rule (factor -> NUMBER)
-WARNING: rejected rule (term -> NUMBER) in state 54
+WARNING: shift/reduce conflict for COMAA in state 110 resolved as shift
+WARNING: reduce/reduce conflict in state 52 resolved using rule (factor -> NUMBER)
+WARNING: rejected rule (term -> NUMBER) in state 52
 WARNING: Rule (term -> NUMBER) is never reduced
