@@ -82,15 +82,6 @@ def p_empty(p):
     p[0] = " "
 
 
-def p_op(p):
-    """op : EQUAL
-    | BIGGER_THAN_OR_EQUAL_TO
-    | BIGGER_THAN
-    | SMALLER_THAN_OR_EQUAL_TO
-    | SMALLER_THAN"""
-    p[0] = p[1]
-
-
 def p_where(p):
     "where : WHERE condition"
     p[0] = p[2]
@@ -112,19 +103,19 @@ def p_condition_parens(p):
 
 
 def p_expression(p):
-    "expression : expression_term"
-    p[0] = p[1]
-
-
-def p_expression_term(p):
-    "expression_term : term"
-    p[0] = p[1]
-
-
-def p_term(p):
-    """term : COLUMN_NAME
+    """expression : COLUMN_NAME
     | NUMBER
     | STRING"""
+    p[0] = p[1]
+
+
+def p_op(p):
+    """op : EQUAL
+    | EQUAL_EQUAL
+    | BIGGER_THAN_OR_EQUAL_TO
+    | BIGGER_THAN
+    | SMALLER_THAN_OR_EQUAL_TO
+    | SMALLER_THAN"""
     p[0] = p[1]
 
 
@@ -161,16 +152,23 @@ def p_select(p):
         Connection = sqlite3.connect(p[4])
         testFile = etl.fromdb(Connection, "SELECT * FROM table1")
     elif ".p" in p[4]:
-        testFile = etl.frompickle(p[5])
+        testFile = etl.frompickle(p[4])
     elif ".json" in p[4]:
         testFile = etl.fromjson(p[4])
+    elif ".xml" in p[4]:
+        testFile = etl.fromxml(p[4], "tr", "td")
 
     # ================= TRANSFORM ================= #
-    # if p[6] != None: ===> where
+    if p[6] != None:  # ===> where a == csv
+        # https://petl.readthedocs.io/en/stable/transform.html#selecting-rows
+        testFile = etl.select(testFile, lambda p: p[6])
 
     if p[2] != "*":
         testFile = etl.cut(testFile, p[2])  # Select by column number ===> bug
 
+    if p[7] != None:
+        testFile = etl.sort(testFile)
+        print("testFile")
     # ================= LOAD ================= #
     if p[5] == "console":
         print(testFile)
@@ -187,6 +185,8 @@ def p_select(p):
     elif ".json" in p[5]:
         etl.tojsonarrays(testFile, p[5])
         print(open(p[5]).read())
+    elif ".html" in p[5]:
+        etl.tohtml(testFile, p[5], caption="example Table HTML")
 
     # print(f"Columns ===> {p[2]}")
     # print(f"DataSource ===> {p[4]}")
@@ -204,29 +204,34 @@ def p_into_empty(p):
     # p[0] = None
 
 
-def p_having(p):
-    """having : HAVING condition
-    | empty"""
-    pass
-
-
 def p_order(p):
-    """order : ORDER BY orders
+    """order : ORDER
     | empty"""
-    pass  # p[0] = " "
+    p[0] = p[1]  # p[0] = " "
 
 
-def p_orders(p):
-    """orders : column way
-    | orders COMAA orders"""
-    pass
+# def p_order(p):
+#     """order : ORDER BY orders
+#     | empty"""
+#     p[0] = p[3]  # p[0] = " "
 
 
-def p_way(p):
-    """way : ASC
-    | DESC
-    | empty"""
-    pass
+# def p_order(p):
+#     """order : empty"""
+#     p[0] = p[1]  # p[0] = " "
+
+
+# def p_orders(p):
+#     """orders : column way
+#     | orders COMAA orders"""
+#     p[0] = (p[1], p[2])
+
+
+# def p_way(p):
+#     """way : ASC
+#     | DESC
+#     | empty"""
+#     p[0] = p[1]
 
 
 def p_select_into(p):
@@ -269,43 +274,64 @@ def p_data(p):
 
 
 def p_insert(p):
-    """insert : INSERT INTO DATASOURCE icolumn VALUES LPAREN value RPAREN SIME_COLON
-    | INSERT INTO DATASOURCE icolumn LPAREN select RPAREN SIME_COLON"""
-    print("Insert is Done ♠")
+    """insert : INSERT INTO data LPAREN icolumn RPAREN VALUES LPAREN value RPAREN SIME_COLON
+    | INSERT INTO data LPAREN icolumn RPAREN LPAREN select RPAREN SIME_COLON"""
+
+    print("sssss")
+    testFile = p[3]
+    if ".csv" in p[3]:
+        appendcsv(p[9], testFile)
+        print("Success")
+        print(testFile)  # ============> ERROR
+    elif ".p" in p[3]:
+        appendpickle(p[9], testFile)
+        print(frompickle(testFile))
+    elif ".db" in p[3]:
+        Connection = sqlite3.connect(testFile)
+        appenddb(p[9], Connection, "table1")
+        print("Success")
+    elif ".json" in p[3]:
+        etl.tojsonarrays(p[9], testFile)
+        print(open(testFile).read())
+    elif ".html" in p[3]:
+        etl.tohtml(p[9], testFile, caption="example Table HTML")
+    # if ".csv" in p[3]:
+    #     testFile = etl.tocsv(p[9], p[3])
+    #     print("testFile")
+    #     print(open(p[3]).read())
 
 
-# PETL
-# if p[3] == p[3].find('.csv'):
-#     table1 = [[f'{p[5]}', f'{p[5]}'],
-#               [f'{p[9]}', f'{p[9]}'],
-#               [f'{p[9]}', f'{p[9]}'],
-#               [f'{p[9]}', f'{p[9]}']]
-#     with open(f'{p[5]}', 'w') as f:
-#         writer = csv.writer(f)
-#         writer.writerows(table1)
-#     table2 = etl.fromcsv('example.csv')
-#     table2
-
-
+# insert into [example copy.csv] (a,b) values (insert,insert);
 def p_value_string(p):
     "value : STRING"
-    pass
+    p[0] = p[1]
 
 
 def p_value_number(p):
     "value : NUMBER"
-    pass
+    p[0] = p[1]
 
 
 def p_value(p):
     "value : value COMAA value"
-    pass
+    p[0] = (p[1], p[2], p[3])
 
 
-def p_icolumn(p):
-    """icolumn : LPAREN COLUMN_NAME RPAREN
-    | empty"""
-    pass
+def p_icolumn_empty(p):
+    "icolumn : empty"
+    p[0] = p[1]
+
+
+def p_icolumn_name(p):
+    "icolumn : COLUMN_NAME"
+    p[0] = p[1]
+
+
+def p_icolumns(p):
+    """icolumn : icolumn COMAA icolumn"""
+    p[0] = []
+    p[0].extend(p[1])
+    p[0].extend(p[3])
 
 
 # ♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦
@@ -316,7 +342,7 @@ def p_icolumn(p):
 
 
 def p_update(p):
-    "update : UPDATE DATASOURCE SET assigns where SIME_COLON"
+    "update : UPDATE data SET assigns where SIME_COLON"
     print("Update is Done ♠")
 
 
@@ -334,7 +360,7 @@ def p_assigns(p):
 
 
 def p_delete(p):
-    "delete : DELETE FROM DATASOURCE where SIME_COLON"
+    "delete : DELETE FROM data where SIME_COLON"
     print("Delete is Done ♠")
 
 

@@ -40,6 +40,7 @@ tokens = [
     "COLUMN_NUMBER",
     "STRING",
     "EQUAL",
+    "EQUAL_EQUAL",
     "BIGGER_THAN_OR_EQUAL_TO",
     "BIGGER_THAN",
     "SMALLER_THAN_OR_EQUAL_TO",
@@ -71,6 +72,7 @@ t_MINUS = r"-"
 t_TIMES = r"\*"
 t_DIVIDE = r"/"
 t_EQUAL = r"="
+t_EQUAL_EQUAL = r"=="
 t_BIGGER_THAN_OR_EQUAL_TO = r">="
 t_BIGGER_THAN = r">"
 t_SMALLER_THAN_OR_EQUAL_TO = r"<="
