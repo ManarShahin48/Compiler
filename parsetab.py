@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'startALL AND ARABIC_DOUBLE_QUOTE AS ASC BIGGER_THAN BIGGER_THAN_OR_EQUAL_TO BY COLUMN_NAME COLUMN_NUMBER COMAA COUNT DATASOURCE DELETE DESC DISTINCT DIVIDE DOT DOUBLE_QUOTE EQUAL EQUAL_EQUAL FROM GROUP HAVING INNER INSERT INTO JOIN LBRACE LIMIT LPAREN L_SQ_BRACE MINUS NOT NUMBER OR ORDER PERCENT PLUS RBRACE RPAREN R_ARABIC_DOUBLE_QUOTE R_SQ_BRACE SELECT SET SIME_COLON SINGLE_QUOTE SMALLER_THAN SMALLER_THAN_OR_EQUAL_TO STRING SUM TIMES UPDATE VALUES WHEREstart : select\n    | insert\n    | update\n    | deleteexpression : expression PLUS termexpression : expression MINUS termexpression : termterm : term TIMES factorterm : term DIVIDE factorterm : factorfactor : NUMBERfactor : LPAREN expression RPARENempty :where : WHERE conditionwhere : emptycondition : expression op expressioncondition : LPAREN condition RPARENexpression : COLUMN_NAME\n    | NUMBER\n    | STRINGop : EQUAL\n    | EQUAL_EQUAL\n    | BIGGER_THAN_OR_EQUAL_TO\n    | BIGGER_THAN\n    | SMALLER_THAN_OR_EQUAL_TO\n    | SMALLER_THANcondition : condition AND conditioncondition : condition OR conditioncondition : NOT conditionselect : SELECT column FROM data into where order SIME_COLONinto : INTO datainto : emptyorder : ORDER\n    | emptycolumn : TIMEScolumn : COLUMN_NAMEcolumn : DATASOURCEcolumn : column COMAA column\n    | emptydata : DATASOURCEinsert : INSERT INTO data LPAREN icolumn RPAREN VALUES LPAREN value RPAREN SIME_COLON\n    | INSERT INTO data LPAREN icolumn RPAREN LPAREN select RPAREN SIME_COLONvalue : STRINGvalue : NUMBERvalue : value COMAA valueicolumn : emptyicolumn : COLUMN_NAMEicolumn : icolumn COMAA icolumnupdate : UPDATE DATASOURCE SET assigns where SIME_COLONassigns : column EQUAL value\n    | assigns COMAA assignsdelete : DELETE FROM DATASOURCE where SIME_COLON'
+_lr_signature = 'startALL AND ARABIC_DOUBLE_QUOTE AS ASC BIGGER_THAN BIGGER_THAN_OR_EQUAL_TO BY COLUMN_NAME COLUMN_NUMBER COMAA COUNT DATASOURCE DELETE DESC DISTINCT DIVIDE DOT DOUBLE_QUOTE EQUAL EQUAL_EQUAL FROM GROUP HAVING INNER INSERT INTO JOIN LBRACE LIMIT LPAREN L_SQ_BRACE MINUS NOT NUMBER OR ORDER PERCENT PLUS RBRACE RPAREN R_ARABIC_DOUBLE_QUOTE R_SQ_BRACE SELECT SET SIME_COLON SINGLE_QUOTE SMALLER_THAN SMALLER_THAN_OR_EQUAL_TO STRING SUM TIMES UPDATE VALUES WHEREstart : select\n    | update\n    | deleteexpression : expression PLUS termexpression : expression MINUS termexpression : termterm : term TIMES factorterm : term DIVIDE factorterm : factorfactor : NUMBERfactor : LPAREN expression RPARENempty :where : WHERE conditionwhere : emptycondition : expression op expressioncondition : LPAREN condition RPARENexpression : COLUMN_NAME\n    | NUMBER\n    | stringstring : STRINGop : EQUAL\n    | EQUAL_EQUAL\n    | BIGGER_THAN_OR_EQUAL_TO\n    | BIGGER_THAN\n    | SMALLER_THAN_OR_EQUAL_TO\n    | SMALLER_THANcondition : condition AND conditioncondition : condition OR conditioncondition : NOT conditionselect : SELECT column FROM data into where order SIME_COLONinto : INSERT datainto : emptyorder : ORDER BY ASCorder : emptycolumn : TIMEScolumn : COLUMN_NAMEcolumn : DATASOURCEcolumn : column COMAA column\n    | emptydata : DATASOURCEvalue : STRINGvalue : NUMBERvalue : value COMAA valueicolumn : emptyicolumn : COLUMN_NAMEicolumn : icolumn COMAA icolumnupdate : UPDATE data SET assigns where SIME_COLONassigns : column EQUAL value\n    | assigns COMAA assignsdelete : DELETE FROM data where SIME_COLON'
     
-_lr_action_items = {'SELECT':([0,79,],[6,6,]),'INSERT':([0,],[7,]),'UPDATE':([0,],[8,]),'DELETE':([0,],[9,]),'$end':([1,2,3,4,5,41,55,94,101,103,],[0,-1,-2,-3,-4,-52,-49,-30,-42,-41,]),'TIMES':([6,19,22,39,46,48,50,87,88,89,91,92,93,],[11,11,11,11,74,-11,-10,74,-11,74,-12,-8,-9,]),'COLUMN_NAME':([6,19,22,26,30,39,44,45,54,60,61,62,65,66,67,68,69,70,86,],[12,12,12,37,47,12,47,47,37,47,47,47,-21,-22,-23,-24,-25,-26,47,]),'DATASOURCE':([6,8,15,17,18,19,22,33,39,],[13,16,21,23,21,13,13,21,13,]),'FROM':([6,9,10,11,12,13,14,19,25,],[-13,17,18,-35,-36,-37,-39,-13,-38,]),'COMAA':([6,10,11,12,13,14,19,22,25,26,27,28,35,36,37,39,54,56,57,58,59,81,97,100,],[-13,19,-35,-36,-37,-39,-13,-13,19,-13,39,19,54,-46,-47,-13,-13,39,82,-43,-44,54,82,82,]),'INTO':([7,21,24,],[15,-40,33,]),'EQUAL':([11,12,13,14,19,22,25,28,39,43,46,47,48,49,50,72,87,88,89,91,92,93,],[-35,-36,-37,-39,-13,-13,-38,40,-13,65,-7,-18,-11,-20,-10,65,-5,-11,-6,-12,-8,-9,]),'SET':([16,],[22,]),'LPAREN':([20,21,30,44,45,53,60,61,62,63,64,65,66,67,68,69,70,74,75,80,86,],[26,-40,44,44,44,79,44,44,86,86,86,-21,-22,-23,-24,-25,-26,86,86,96,86,]),'WHERE':([21,23,24,27,32,34,52,56,57,58,59,97,],[-40,30,-13,30,30,-32,-31,-51,-50,-43,-44,-45,]),'ORDER':([21,24,31,32,34,42,46,47,48,49,50,51,52,73,83,84,85,87,88,89,90,91,92,93,],[-40,-13,-15,-13,-32,-14,-7,-18,-11,-20,-10,77,-31,-29,-27,-28,-16,-5,-11,-6,-17,-12,-8,-9,]),'SIME_COLON':([21,23,24,27,29,31,32,34,38,42,46,47,48,49,50,51,52,56,57,58,59,73,76,77,78,83,84,85,87,88,89,90,91,92,93,97,99,102,],[-40,-13,-13,-13,41,-15,-13,-32,55,-14,-7,-18,-11,-20,-10,-13,-31,-51,-50,-43,-44,-29,94,-33,-34,-27,-28,-16,-5,-11,-6,-17,-12,-8,-9,-45,101,103,]),'RPAREN':([26,35,36,37,46,47,48,49,50,54,58,59,71,72,73,81,83,84,85,87,88,89,90,91,92,93,94,95,97,98,100,],[-13,53,-46,-47,-7,-18,-11,-20,-10,-13,-43,-44,90,91,-29,-48,-27,-28,-16,-5,-11,-6,-17,-12,-8,-9,-30,99,-45,91,102,]),'NOT':([30,44,45,60,61,],[45,45,45,45,45,]),'NUMBER':([30,40,44,45,60,61,62,63,64,65,66,67,68,69,70,74,75,82,86,96,],[48,59,48,48,48,48,48,88,88,-21,-22,-23,-24,-25,-26,88,88,59,48,59,]),'STRING':([30,40,44,45,60,61,62,65,66,67,68,69,70,82,86,96,],[49,58,49,49,49,49,49,-21,-22,-23,-24,-25,-26,58,49,58,]),'AND':([42,46,47,48,49,50,71,73,83,84,85,87,88,89,90,91,92,93,],[60,-7,-18,-11,-20,-10,60,60,60,60,-16,-5,-11,-6,-17,-12,-8,-9,]),'OR':([42,46,47,48,49,50,71,73,83,84,85,87,88,89,90,91,92,93,],[61,-7,-18,-11,-20,-10,61,61,61,61,-16,-5,-11,-6,-17,-12,-8,-9,]),'PLUS':([43,46,47,48,49,50,72,85,87,88,89,91,92,93,98,],[63,-7,-18,-11,-20,-10,63,63,-5,-11,-6,-12,-8,-9,63,]),'MINUS':([43,46,47,48,49,50,72,85,87,88,89,91,92,93,98,],[64,-7,-18,-11,-20,-10,64,64,-5,-11,-6,-12,-8,-9,64,]),'EQUAL_EQUAL':([43,46,47,48,49,50,72,87,88,89,91,92,93,],[66,-7,-18,-11,-20,-10,66,-5,-11,-6,-12,-8,-9,]),'BIGGER_THAN_OR_EQUAL_TO':([43,46,47,48,49,50,72,87,88,89,91,92,93,],[67,-7,-18,-11,-20,-10,67,-5,-11,-6,-12,-8,-9,]),'BIGGER_THAN':([43,46,47,48,49,50,72,87,88,89,91,92,93,],[68,-7,-18,-11,-20,-10,68,-5,-11,-6,-12,-8,-9,]),'SMALLER_THAN_OR_EQUAL_TO':([43,46,47,48,49,50,72,87,88,89,91,92,93,],[69,-7,-18,-11,-20,-10,69,-5,-11,-6,-12,-8,-9,]),'SMALLER_THAN':([43,46,47,48,49,50,72,87,88,89,91,92,93,],[70,-7,-18,-11,-20,-10,70,-5,-11,-6,-12,-8,-9,]),'DIVIDE':([46,48,50,87,88,89,91,92,93,],[75,-11,-10,75,-11,75,-12,-8,-9,]),'VALUES':([53,],[80,]),}
+_lr_action_items = {'SELECT':([0,],[5,]),'UPDATE':([0,],[6,]),'DELETE':([0,],[7,]),'$end':([1,2,3,4,33,46,82,],[0,-1,-2,-3,-50,-47,-30,]),'TIMES':([5,17,18,31,38,40,42,75,76,77,79,80,81,],[9,9,9,9,65,-10,-9,65,-10,65,-11,-7,-8,]),'COLUMN_NAME':([5,17,18,25,31,36,37,51,52,53,56,57,58,59,60,61,74,],[10,10,10,39,10,39,39,39,39,39,-21,-22,-23,-24,-25,-26,39,]),'DATASOURCE':([5,6,15,16,17,18,28,31,],[11,14,14,14,11,11,14,11,]),'FROM':([5,7,8,9,10,11,12,17,21,],[-12,15,16,-35,-36,-37,-39,-12,-38,]),'COMAA':([5,8,9,10,11,12,17,18,21,22,23,31,47,48,49,50,84,],[-12,17,-35,-36,-37,-39,-12,-12,17,31,17,-12,31,70,-41,-42,70,]),'EQUAL':([9,10,11,12,17,18,21,23,31,35,38,39,40,41,42,43,63,75,76,77,79,80,81,],[-35,-36,-37,-39,-12,-12,-38,32,-12,56,-6,-17,-10,-19,-9,-20,56,-4,-10,-5,-11,-7,-8,]),'SET':([13,14,],[18,-40,]),'WHERE':([14,19,20,22,27,29,45,47,48,49,50,84,],[-40,25,-12,25,25,-32,-31,-49,-48,-41,-42,-43,]),'SIME_COLON':([14,19,20,22,24,26,27,29,30,34,38,39,40,41,42,43,44,45,47,48,49,50,64,67,69,71,72,73,75,76,77,78,79,80,81,84,86,],[-40,-12,-12,-12,33,-14,-12,-32,46,-13,-6,-17,-10,-19,-9,-20,-12,-31,-49,-48,-41,-42,-29,82,-34,-27,-28,-15,-4,-10,-5,-16,-11,-7,-8,-43,-33,]),'INSERT':([14,20,],[-40,28,]),'ORDER':([14,20,26,27,29,34,38,39,40,41,42,43,44,45,64,71,72,73,75,76,77,78,79,80,81,],[-40,-12,-14,-12,-32,-13,-6,-17,-10,-19,-9,-20,68,-31,-29,-27,-28,-15,-4,-10,-5,-16,-11,-7,-8,]),'LPAREN':([25,36,37,51,52,53,54,55,56,57,58,59,60,61,65,66,74,],[36,36,36,36,36,74,74,74,-21,-22,-23,-24,-25,-26,74,74,74,]),'NOT':([25,36,37,51,52,],[37,37,37,37,37,]),'NUMBER':([25,32,36,37,51,52,53,54,55,56,57,58,59,60,61,65,66,70,74,],[40,50,40,40,40,40,40,76,76,-21,-22,-23,-24,-25,-26,76,76,50,40,]),'STRING':([25,32,36,37,51,52,53,56,57,58,59,60,61,70,74,],[43,49,43,43,43,43,43,-21,-22,-23,-24,-25,-26,49,43,]),'AND':([34,38,39,40,41,42,43,62,64,71,72,73,75,76,77,78,79,80,81,],[51,-6,-17,-10,-19,-9,-20,51,51,51,51,-15,-4,-10,-5,-16,-11,-7,-8,]),'OR':([34,38,39,40,41,42,43,62,64,71,72,73,75,76,77,78,79,80,81,],[52,-6,-17,-10,-19,-9,-20,52,52,52,52,-15,-4,-10,-5,-16,-11,-7,-8,]),'PLUS':([35,38,39,40,41,42,43,63,73,75,76,77,79,80,81,85,],[54,-6,-17,-10,-19,-9,-20,54,54,-4,-10,-5,-11,-7,-8,54,]),'MINUS':([35,38,39,40,41,42,43,63,73,75,76,77,79,80,81,85,],[55,-6,-17,-10,-19,-9,-20,55,55,-4,-10,-5,-11,-7,-8,55,]),'EQUAL_EQUAL':([35,38,39,40,41,42,43,63,75,76,77,79,80,81,],[57,-6,-17,-10,-19,-9,-20,57,-4,-10,-5,-11,-7,-8,]),'BIGGER_THAN_OR_EQUAL_TO':([35,38,39,40,41,42,43,63,75,76,77,79,80,81,],[58,-6,-17,-10,-19,-9,-20,58,-4,-10,-5,-11,-7,-8,]),'BIGGER_THAN':([35,38,39,40,41,42,43,63,75,76,77,79,80,81,],[59,-6,-17,-10,-19,-9,-20,59,-4,-10,-5,-11,-7,-8,]),'SMALLER_THAN_OR_EQUAL_TO':([35,38,39,40,41,42,43,63,75,76,77,79,80,81,],[60,-6,-17,-10,-19,-9,-20,60,-4,-10,-5,-11,-7,-8,]),'SMALLER_THAN':([35,38,39,40,41,42,43,63,75,76,77,79,80,81,],[61,-6,-17,-10,-19,-9,-20,61,-4,-10,-5,-11,-7,-8,]),'RPAREN':([38,39,40,41,42,43,62,63,64,71,72,73,75,76,77,78,79,80,81,85,],[-6,-17,-10,-19,-9,-20,78,79,-29,-27,-28,-15,-4,-10,-5,-16,-11,-7,-8,79,]),'DIVIDE':([38,40,42,75,76,77,79,80,81,],[66,-10,-9,66,-10,66,-11,-7,-8,]),'BY':([68,],[83,]),'ASC':([83,],[86,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'start':([0,],[1,]),'select':([0,79,],[2,95,]),'insert':([0,],[3,]),'update':([0,],[4,]),'delete':([0,],[5,]),'column':([6,19,22,39,],[10,25,28,28,]),'empty':([6,19,22,23,24,26,27,32,39,51,54,],[14,14,14,31,34,36,31,31,14,78,36,]),'data':([15,18,33,],[20,24,52,]),'assigns':([22,39,],[27,56,]),'where':([23,27,32,],[29,38,51,]),'into':([24,],[32,]),'icolumn':([26,54,],[35,81,]),'condition':([30,44,45,60,61,],[42,71,73,83,84,]),'expression':([30,44,45,60,61,62,86,],[43,72,43,43,43,85,98,]),'term':([30,44,45,60,61,62,63,64,86,],[46,46,46,46,46,46,87,89,46,]),'factor':([30,44,45,60,61,62,63,64,74,75,86,],[50,50,50,50,50,50,50,50,92,93,50,]),'value':([40,82,96,],[57,97,100,]),'op':([43,72,],[62,62,]),'order':([51,],[76,]),}
+_lr_goto_items = {'start':([0,],[1,]),'select':([0,],[2,]),'update':([0,],[3,]),'delete':([0,],[4,]),'column':([5,17,18,31,],[8,21,23,23,]),'empty':([5,17,18,19,20,22,27,31,44,],[12,12,12,26,29,26,26,12,69,]),'data':([6,15,16,28,],[13,19,20,45,]),'assigns':([18,31,],[22,47,]),'where':([19,22,27,],[24,30,44,]),'into':([20,],[27,]),'condition':([25,36,37,51,52,],[34,62,64,71,72,]),'expression':([25,36,37,51,52,53,74,],[35,63,35,35,35,73,85,]),'term':([25,36,37,51,52,53,54,55,74,],[38,38,38,38,38,38,75,77,38,]),'string':([25,36,37,51,52,53,74,],[41,41,41,41,41,41,41,]),'factor':([25,36,37,51,52,53,54,55,65,66,74,],[42,42,42,42,42,42,42,42,80,81,42,]),'value':([32,70,],[48,84,]),'op':([35,63,],[53,53,]),'order':([44,],[67,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,56 +27,54 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> start","S'",1,None,None,None),
-  ('start -> select','start',1,'p_start','ply_yacc.py',24),
-  ('start -> insert','start',1,'p_start','ply_yacc.py',25),
-  ('start -> update','start',1,'p_start','ply_yacc.py',26),
-  ('start -> delete','start',1,'p_start','ply_yacc.py',27),
-  ('expression -> expression PLUS term','expression',3,'p_expression_plus','ply_yacc.py',36),
-  ('expression -> expression MINUS term','expression',3,'p_expression_minus','ply_yacc.py',41),
-  ('expression -> term','expression',1,'p_expression_term','ply_yacc.py',46),
-  ('term -> term TIMES factor','term',3,'p_term_times','ply_yacc.py',51),
-  ('term -> term DIVIDE factor','term',3,'p_term_div','ply_yacc.py',56),
-  ('term -> factor','term',1,'p_term_factor','ply_yacc.py',61),
-  ('factor -> NUMBER','factor',1,'p_factor_num','ply_yacc.py',66),
-  ('factor -> LPAREN expression RPAREN','factor',3,'p_factor_expr','ply_yacc.py',71),
-  ('empty -> <empty>','empty',0,'p_empty','ply_yacc.py',81),
-  ('where -> WHERE condition','where',2,'p_where','ply_yacc.py',86),
-  ('where -> empty','where',1,'p_where_empty','ply_yacc.py',91),
-  ('condition -> expression op expression','condition',3,'p_condition','ply_yacc.py',96),
-  ('condition -> LPAREN condition RPAREN','condition',3,'p_condition_parens','ply_yacc.py',101),
-  ('expression -> COLUMN_NAME','expression',1,'p_expression','ply_yacc.py',106),
-  ('expression -> NUMBER','expression',1,'p_expression','ply_yacc.py',107),
-  ('expression -> STRING','expression',1,'p_expression','ply_yacc.py',108),
-  ('op -> EQUAL','op',1,'p_op','ply_yacc.py',113),
-  ('op -> EQUAL_EQUAL','op',1,'p_op','ply_yacc.py',114),
-  ('op -> BIGGER_THAN_OR_EQUAL_TO','op',1,'p_op','ply_yacc.py',115),
-  ('op -> BIGGER_THAN','op',1,'p_op','ply_yacc.py',116),
-  ('op -> SMALLER_THAN_OR_EQUAL_TO','op',1,'p_op','ply_yacc.py',117),
-  ('op -> SMALLER_THAN','op',1,'p_op','ply_yacc.py',118),
-  ('condition -> condition AND condition','condition',3,'p_condition_and','ply_yacc.py',123),
-  ('condition -> condition OR condition','condition',3,'p_condition_or','ply_yacc.py',128),
-  ('condition -> NOT condition','condition',2,'p_condition_not','ply_yacc.py',133),
-  ('select -> SELECT column FROM data into where order SIME_COLON','select',8,'p_select','ply_yacc.py',145),
-  ('into -> INTO data','into',2,'p_into','ply_yacc.py',197),
-  ('into -> empty','into',1,'p_into_empty','ply_yacc.py',202),
-  ('order -> ORDER','order',1,'p_order','ply_yacc.py',208),
-  ('order -> empty','order',1,'p_order','ply_yacc.py',209),
-  ('column -> TIMES','column',1,'p_column_all','ply_yacc.py',242),
-  ('column -> COLUMN_NAME','column',1,'p_column_name','ply_yacc.py',247),
-  ('column -> DATASOURCE','column',1,'p_column_number','ply_yacc.py',252),
-  ('column -> column COMAA column','column',3,'p_columns','ply_yacc.py',257),
-  ('column -> empty','column',1,'p_columns','ply_yacc.py',258),
-  ('data -> DATASOURCE','data',1,'p_data','ply_yacc.py',265),
-  ('insert -> INSERT INTO data LPAREN icolumn RPAREN VALUES LPAREN value RPAREN SIME_COLON','insert',11,'p_insert','ply_yacc.py',277),
-  ('insert -> INSERT INTO data LPAREN icolumn RPAREN LPAREN select RPAREN SIME_COLON','insert',10,'p_insert','ply_yacc.py',278),
-  ('value -> STRING','value',1,'p_value_string','ply_yacc.py',289),
-  ('value -> NUMBER','value',1,'p_value_number','ply_yacc.py',294),
-  ('value -> value COMAA value','value',3,'p_value','ply_yacc.py',299),
-  ('icolumn -> empty','icolumn',1,'p_icolumn_empty','ply_yacc.py',304),
-  ('icolumn -> COLUMN_NAME','icolumn',1,'p_icolumn_name','ply_yacc.py',309),
-  ('icolumn -> icolumn COMAA icolumn','icolumn',3,'p_icolumns','ply_yacc.py',314),
-  ('update -> UPDATE DATASOURCE SET assigns where SIME_COLON','update',6,'p_update','ply_yacc.py',328),
-  ('assigns -> column EQUAL value','assigns',3,'p_assigns','ply_yacc.py',333),
-  ('assigns -> assigns COMAA assigns','assigns',3,'p_assigns','ply_yacc.py',334),
-  ('delete -> DELETE FROM DATASOURCE where SIME_COLON','delete',5,'p_delete','ply_yacc.py',346),
+  ('start -> select','start',1,'p_start','ply_yacc.py',28),
+  ('start -> update','start',1,'p_start','ply_yacc.py',29),
+  ('start -> delete','start',1,'p_start','ply_yacc.py',30),
+  ('expression -> expression PLUS term','expression',3,'p_expression_plus','ply_yacc.py',39),
+  ('expression -> expression MINUS term','expression',3,'p_expression_minus','ply_yacc.py',44),
+  ('expression -> term','expression',1,'p_expression_term','ply_yacc.py',49),
+  ('term -> term TIMES factor','term',3,'p_term_times','ply_yacc.py',54),
+  ('term -> term DIVIDE factor','term',3,'p_term_div','ply_yacc.py',59),
+  ('term -> factor','term',1,'p_term_factor','ply_yacc.py',64),
+  ('factor -> NUMBER','factor',1,'p_factor_num','ply_yacc.py',69),
+  ('factor -> LPAREN expression RPAREN','factor',3,'p_factor_expr','ply_yacc.py',74),
+  ('empty -> <empty>','empty',0,'p_empty','ply_yacc.py',84),
+  ('where -> WHERE condition','where',2,'p_where','ply_yacc.py',89),
+  ('where -> empty','where',1,'p_where_empty','ply_yacc.py',94),
+  ('condition -> expression op expression','condition',3,'p_condition','ply_yacc.py',99),
+  ('condition -> LPAREN condition RPAREN','condition',3,'p_condition_parens','ply_yacc.py',104),
+  ('expression -> COLUMN_NAME','expression',1,'p_expression','ply_yacc.py',109),
+  ('expression -> NUMBER','expression',1,'p_expression','ply_yacc.py',110),
+  ('expression -> string','expression',1,'p_expression','ply_yacc.py',111),
+  ('string -> STRING','string',1,'p_string','ply_yacc.py',116),
+  ('op -> EQUAL','op',1,'p_op','ply_yacc.py',121),
+  ('op -> EQUAL_EQUAL','op',1,'p_op','ply_yacc.py',122),
+  ('op -> BIGGER_THAN_OR_EQUAL_TO','op',1,'p_op','ply_yacc.py',123),
+  ('op -> BIGGER_THAN','op',1,'p_op','ply_yacc.py',124),
+  ('op -> SMALLER_THAN_OR_EQUAL_TO','op',1,'p_op','ply_yacc.py',125),
+  ('op -> SMALLER_THAN','op',1,'p_op','ply_yacc.py',126),
+  ('condition -> condition AND condition','condition',3,'p_condition_and','ply_yacc.py',131),
+  ('condition -> condition OR condition','condition',3,'p_condition_or','ply_yacc.py',136),
+  ('condition -> NOT condition','condition',2,'p_condition_not','ply_yacc.py',141),
+  ('select -> SELECT column FROM data into where order SIME_COLON','select',8,'p_select','ply_yacc.py',153),
+  ('into -> INSERT data','into',2,'p_into','ply_yacc.py',232),
+  ('into -> empty','into',1,'p_into_empty','ply_yacc.py',237),
+  ('order -> ORDER BY ASC','order',3,'p_order_asc','ply_yacc.py',243),
+  ('order -> empty','order',1,'p_order_empty','ply_yacc.py',248),
+  ('column -> TIMES','column',1,'p_column_all','ply_yacc.py',292),
+  ('column -> COLUMN_NAME','column',1,'p_column_name','ply_yacc.py',297),
+  ('column -> DATASOURCE','column',1,'p_column_number','ply_yacc.py',302),
+  ('column -> column COMAA column','column',3,'p_columns','ply_yacc.py',307),
+  ('column -> empty','column',1,'p_columns','ply_yacc.py',308),
+  ('data -> DATASOURCE','data',1,'p_data','ply_yacc.py',315),
+  ('value -> STRING','value',1,'p_value_string','ply_yacc.py',355),
+  ('value -> NUMBER','value',1,'p_value_number','ply_yacc.py',360),
+  ('value -> value COMAA value','value',3,'p_value','ply_yacc.py',365),
+  ('icolumn -> empty','icolumn',1,'p_icolumn_empty','ply_yacc.py',370),
+  ('icolumn -> COLUMN_NAME','icolumn',1,'p_icolumn_name','ply_yacc.py',375),
+  ('icolumn -> icolumn COMAA icolumn','icolumn',3,'p_icolumns','ply_yacc.py',380),
+  ('update -> UPDATE data SET assigns where SIME_COLON','update',6,'p_update','ply_yacc.py',394),
+  ('assigns -> column EQUAL value','assigns',3,'p_assigns','ply_yacc.py',399),
+  ('assigns -> assigns COMAA assigns','assigns',3,'p_assigns','ply_yacc.py',400),
+  ('delete -> DELETE FROM data where SIME_COLON','delete',5,'p_delete','ply_yacc.py',412),
 ]

@@ -16,6 +16,7 @@ from petl import fromxml
 import time
 import pymysql
 
+
 start_time = time.time()
 # Get the token map from the lexer.
 from ply_lex import tokens
@@ -161,6 +162,8 @@ def p_select(p):
     # elif ".db" in p[4]:
     #     connection = pymysql.connect(password='moonpie', database='thangs')
     #     table = etl.fromdb(connection, 'SELECT * FROM example')
+    elif ".html" in p[4]:
+        print(open(p[4]).read())
     elif ".p" in p[4]:
         testFile = etl.frompickle(p[4])
     elif ".json" in p[4]:
@@ -187,7 +190,7 @@ def p_select(p):
         testFile = etl.sort(testFile)
     # ================= LOAD ================= #
     if p[5] == "console":
-        print(testFile)
+        # print(testFile)
         print("--- %s seconds ---" % (time.time() - start_time))
 
     elif ".csv" in p[5]:
@@ -200,17 +203,24 @@ def p_select(p):
         print("Success")
     elif ".db" in p[5]:
         Connection = sqlite3.connect(p[5])
-        appenddb(testFile, Connection, "table1")
+        etl.todb(testFile, Connection, "table1")
+        # appenddb(testFile, Connection, "table1")
         print(testFile)
         print("--- %s seconds ---" % (time.time() - start_time))
     elif ".json" in p[5]:
         etl.tojsonarrays(testFile, p[5])
         print(open(p[5]).read())
         print("--- %s seconds ---" % (time.time() - start_time))
+    elif ".xlsx" in p[5]:
+        etl.io.xlsx.toxlsx(
+            testFile, p[5], sheet=None, write_header=True, mode="replace"
+        )
+        print("--- %s seconds ---" % (time.time() - start_time))
     elif ".html" in p[5]:
         etl.tohtml(testFile, p[5], caption="example Table HTML")
-        print("Success")
-        print(testFile)
+        print("--- %s seconds ---" % (time.time() - start_time))
+        # print("Success")
+        # print(testFile)
 
     # p[0] = (
     #     f"from app import petl\n"
