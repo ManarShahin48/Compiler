@@ -1,5 +1,6 @@
 # The name "yacc" stands for "Yet Another Compiler Compiler"
 # pass ==> make the function without body
+from pickle import NONE
 from petl.io.csv import appendcsv
 from petl.io.db import appenddb
 from petl.io.pickle import appendpickle, frompickle
@@ -12,7 +13,10 @@ from petl import fromcsv
 from petl import look
 from petl import tocsv, look
 from petl import fromxml
+import time
+import pymysql
 
+start_time = time.time()
 # Get the token map from the lexer.
 from ply_lex import tokens
 
@@ -22,7 +26,6 @@ start = "start"
 
 def p_start(p):
     """start : select
-    | insert
     | update
     | delete"""
     pass
@@ -105,8 +108,13 @@ def p_condition_parens(p):
 def p_expression(p):
     """expression : COLUMN_NAME
     | NUMBER
-    | STRING"""
+    | string"""
     p[0] = p[1]
+
+
+def p_string(p):
+    "string : STRING"
+    p[0] = p[1][1:-1]  # ===========> delete " , "
 
 
 def p_op(p):
@@ -147,10 +155,12 @@ def p_select(p):
     testFile = None
     if ".csv" in p[4]:
         testFile = fromcsv(p[4])
-        print("here")
     elif ".db" in p[4]:
         Connection = sqlite3.connect(p[4])
-        testFile = etl.fromdb(Connection, "SELECT * FROM table1")
+        testFile = etl.fromdb(Connection, "SELECT * FROM table3m")
+    # elif ".db" in p[4]:
+    #     connection = pymysql.connect(password='moonpie', database='thangs')
+    #     table = etl.fromdb(connection, 'SELECT * FROM example')
     elif ".p" in p[4]:
         testFile = etl.frompickle(p[4])
     elif ".json" in p[4]:
@@ -160,41 +170,66 @@ def p_select(p):
 
     # ================= TRANSFORM ================= #
     if p[6] != None:  # ===> where a == csv
-        # https://petl.readthedocs.io/en/stable/transform.html#selecting-rows
-        testFile = etl.select(testFile, lambda p: p[6])
-
+        if p[6][1] == "=":
+            testFile = etl.select(
+                testFile, lambda ele: ele[p[6][0]] == p[6][2]
+            )  # ===> done
+        if p[6][1] == ">":
+            testFile = etl.select(testFile, lambda ele: ele[p[6][0]] > p[6][2])
+        if p[6][1] == "<":
+            testFile = etl.select(testFile, lambda ele: ele[p[6][0]] < p[6][2])
     if p[2] != "*":
         testFile = etl.cut(testFile, p[2])  # Select by column number ===> bug
+    else:
+        testFile = etl.cutout(testFile)
 
     if p[7] != None:
         testFile = etl.sort(testFile)
-        print("testFile")
     # ================= LOAD ================= #
     if p[5] == "console":
         print(testFile)
+        print("--- %s seconds ---" % (time.time() - start_time))
+
     elif ".csv" in p[5]:
         appendcsv(testFile, p[5])
-        print("Success")
+        print(testFile)
+
     elif ".p" in p[5]:
         appendpickle(testFile, p[5])
         print(frompickle(p[5]))
+        print("Success")
     elif ".db" in p[5]:
         Connection = sqlite3.connect(p[5])
         appenddb(testFile, Connection, "table1")
-        print("Success")
+        print(testFile)
+        print("--- %s seconds ---" % (time.time() - start_time))
     elif ".json" in p[5]:
         etl.tojsonarrays(testFile, p[5])
         print(open(p[5]).read())
+        print("--- %s seconds ---" % (time.time() - start_time))
     elif ".html" in p[5]:
         etl.tohtml(testFile, p[5], caption="example Table HTML")
+        print("Success")
+        print(testFile)
 
-    # print(f"Columns ===> {p[2]}")
-    # print(f"DataSource ===> {p[4]}")
-    # print(f"DataSource Destination ===> {p[5]}")
+    # p[0] = (
+    #     f"from app import petl\n"
+    #     f"\n"
+    #     f"data = etl.extract('{p[4]}')\n"
+    #     f"data = etl.transform(\n"
+    #     f"   data,\n"
+    #     f"   {{\n"
+    #     f"        'COLUMNS':  {p[2]},\n"
+    #     f"        'ORDER':    {p[7]},\n"
+    #     f"    }}\n"
+    #     f")\n"
+    #     f"etl.load(data, '{p[5]}')\n"
+    # )
+    # print(p[0])
 
 
 def p_into(p):
-    "into : INTO data"
+    "into : INSERT data"
     p[0] = p[2]
 
 
@@ -204,10 +239,25 @@ def p_into_empty(p):
     # p[0] = None
 
 
-def p_order(p):
-    """order : ORDER
-    | empty"""
+def p_order_asc(p):
+    "order : ORDER BY ASC"
     p[0] = p[1]  # p[0] = " "
+
+
+def p_order_empty(p):
+    "order : empty"
+    p[0] = None  # p[0] = " "
+
+
+# def p_way(p):
+#     """way : ASC
+#     | DESC"""
+#     p[0] = p[1]
+
+
+# def p_way(p):
+#     "way : empty"
+#     p[0] = p[1]
 
 
 # def p_order(p):
@@ -273,32 +323,31 @@ def p_data(p):
 # ♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦
 
 
-def p_insert(p):
-    """insert : INSERT INTO data LPAREN icolumn RPAREN VALUES LPAREN value RPAREN SIME_COLON
-    | INSERT INTO data LPAREN icolumn RPAREN LPAREN select RPAREN SIME_COLON"""
+# def p_insert(p):
+#     """insert : INSERT INTO data LPAREN icolumn RPAREN VALUES LPAREN value RPAREN SIME_COLON
+#     | INSERT INTO data LPAREN icolumn RPAREN LPAREN select RPAREN SIME_COLON"""
 
-    print("sssss")
-    testFile = p[3]
-    if ".csv" in p[3]:
-        appendcsv(p[9], testFile)
-        print("Success")
-        print(testFile)  # ============> ERROR
-    elif ".p" in p[3]:
-        appendpickle(p[9], testFile)
-        print(frompickle(testFile))
-    elif ".db" in p[3]:
-        Connection = sqlite3.connect(testFile)
-        appenddb(p[9], Connection, "table1")
-        print("Success")
-    elif ".json" in p[3]:
-        etl.tojsonarrays(p[9], testFile)
-        print(open(testFile).read())
-    elif ".html" in p[3]:
-        etl.tohtml(p[9], testFile, caption="example Table HTML")
-    # if ".csv" in p[3]:
-    #     testFile = etl.tocsv(p[9], p[3])
-    #     print("testFile")
-    #     print(open(p[3]).read())
+#     testFile = p[3]
+#     if ".csv" in p[3]:
+#         appendcsv(p[9], testFile)
+#         print("Success")
+#         print(testFile)  # ============> ERROR
+#     elif ".p" in p[3]:
+#         appendpickle(p[9], testFile)
+#         print(frompickle(testFile))
+#     elif ".db" in p[3]:
+#         Connection = sqlite3.connect(testFile)
+#         appenddb(p[9], Connection, "table1")
+#         print("Success")
+#     elif ".json" in p[3]:
+#         etl.tojsonarrays(p[9], testFile)
+#         print(open(testFile).read())
+#     elif ".html" in p[3]:
+#         etl.tohtml(p[9], testFile, caption="example Table HTML")
+#     # if ".csv" in p[3]:
+#     #     testFile = etl.tocsv(p[9], p[3])
+#     #     print("testFile")
+#     #     print(open(p[3]).read())
 
 
 # insert into [example copy.csv] (a,b) values (insert,insert);
@@ -390,3 +439,7 @@ if __name__ == "__main__":
 # insert into [data source] (column) (select student into [Country] from [data];);
 # update [data source] set column1 = "compiler"  where 3>1;
 # delete from [data source] where 1<=7;
+
+# select * from [example copy.csv] where b = "manara";
+# select * from [example copy.csv] order;
+# select into == order == where
